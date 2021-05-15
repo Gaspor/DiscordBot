@@ -6,11 +6,11 @@ const pupp = require('puppeteer');
 
 let today = [];
 let tomorrow = [];
+let LPRanking = ["Ranking das linguagens de programação mais usadas de acordo com o github:"];
 let examination = "";
 let dateAux;
 let firstOfDay = true;
-let maintenance; 
-let dolarCurrent;
+let maintenance, dolarCurrent;
 
 bot.login(config.token);
 
@@ -19,17 +19,17 @@ let scheduledMessage = new cron.CronJob('00 00 19 * * 1-3', () => {
     
 });
 
-let examinationMessage = new cron.CronJob('00 00 19 28 * 5', () => {
+let examinationMessage = new cron.CronJob('00 00 19 28 5 *', () => {
     bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar que está na hora da prova! \nBoa sorte seus chifrudos, vcs vão precisar! \nLink do Ava: https://ava.qstione.com.br/ \n\n (Ps: me ajuda, eu nem vi os estudos dirigidos!)");
     
 });
 
-let in40minMessage = new cron.CronJob('00 00 22 * * 5', () => {
+let in40minMessage = new cron.CronJob('00 00 22 28 5 *', () => {
     bot.channels.cache.get(config.general_channel).send("Mensagem agendada! \n40 minutos pra acabar essa desgraça, tomar no cu, espero que vcs tenham acertado!");
     
 });
 
-let examinationEnd = new cron.CronJob('00 40 22 * * 5', () => {
+let examinationEnd = new cron.CronJob('00 40 22 28 5 *', () => {
     bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar sobre o termino da prova! \nEntre no ava para ver o resultado da bomba \nLink do Ava: https://ava.qstione.com.br/");
     
 });
@@ -40,36 +40,58 @@ let attSchedule = new cron.CronJob('00 00 00 * * *', () => {
 
 });
 
+let attScheduleAula1 = new cron.CronJob('00 55 18 * * 1-3', () => {
+    let date = new Date();
+    let td = date.getDay();
+
+    bot.user.setActivity("Manutenção agendada!");
+    setSchedule(td);
+    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
+
+});
+
+let attScheduleAula2 = new cron.CronJob('00 55 20 * * 1-3', () => {
+    let date = new Date();
+    let td = date.getDay();
+
+    bot.user.setActivity("Manutenção agendada!");
+    setSchedule(td);
+    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
+
+});
+
 
 bot.on("ready", () => {
     dateAux = new Date().getDate();
-    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
+    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
     getSchedule();
     getDolar();
+    getLPRanking();
     scheduledMessage.start();
     examinationMessage.start();
     in40minMessage.start();
     examinationEnd.start();
     attSchedule.start();
+    attScheduleAula1.start();
+    attScheduleAula2.start();
     console.log("Bot iniciado em " + bot.guilds.cache.size + " servidores!\n");
-    bot.channels.cache.get(config.log_channel).send('=======================================================\nBot iniciado em '  + bot.guilds.cache.size +  ' servidores!');
+    bot.channels.cache.get(config.log_channel).send('\n\n\n=======================================================\nBot iniciado em '  + bot.guilds.cache.size +  ' servidores!');
 
 });
 
 bot.on("message", msg => {
-    getSchedule();
     aux = 0;
-    if(msg.content === "->hoje"){    
+    if (msg.content === "->hoje") {    
         let schedule = formatSchedule(today);
         msg.reply("as aulas de hj para o 3º período são: \n" + schedule + "\n");
         aux = 1;
             
-    } if(msg.content === "->amanhã" || msg.content === "->amanha"){
+    } if (msg.content === "->amanhã" || msg.content === "->amanha") {
         let schedule = formatSchedule(tomorrow);
         msg.reply("as aulas de amanhã para o 3º período são: \n" + schedule + "\n");
         aux = 1;
 
-    } if(msg.content === "->Js"){
+    } if (msg.content === "->Js") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -81,11 +103,11 @@ bot.on("message", msg => {
         
         aux = 1;
 
-    } if(msg.content === "->secret"){
+    } if (msg.content === "->secret") {
         msg.reply("Tu acha mesmo que ia ter algum segredo? Tu é burrão mesmo bixo!");
         aux = 1;
 
-    } if(msg.content === "->Sexta"){
+    } if (msg.content === "->Sexta") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -97,7 +119,7 @@ bot.on("message", msg => {
 
         aux = 1;
 
-    } if(msg.content === "->ramom"){
+    } if (msg.content === "->ramom") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -109,7 +131,7 @@ bot.on("message", msg => {
 
         aux = 1;
 
-    } if(msg.content === "->lip"){
+    } if (msg.content === "->lip") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -121,7 +143,7 @@ bot.on("message", msg => {
         
         aux = 1;
 
-    } if(msg.content === "->max"){
+    } if (msg.content === "->max") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -133,11 +155,11 @@ bot.on("message", msg => {
 
         aux = 1;
 
-    } if(msg.content === "->ava"){
+    } if (msg.content === "->ava") {
         msg.reply("Link para o Ava: https://ava.qstione.com.br/");
         aux = 1;
 
-    } if(msg.content === "->natação?"){
+    } if (msg.content === "->natação?") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -150,7 +172,7 @@ bot.on("message", msg => {
 
         aux = 1;
 
-    } if(msg.content === "->kmeans"){
+    } if (msg.content === "->kmeans") {
         if (msg.guild.id != config.botTestesId && msg.guild.id != config.JogoMinimalistaId) {
             msg.reply("Este comando não está disponível neste servidor!");
 
@@ -161,20 +183,26 @@ bot.on("message", msg => {
 
         aux = 1;
 
-    } if(msg.content === "->prova"){
+    } if (msg.content === "->prova") {
         getExamination(); 
         msg.reply(examination);
         aux = 1;
 
-    } if(msg.content === "->dolar"){
+    } if (msg.content === "->dolar") {
         getDolar();
         msg.reply("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
         aux = 1;
 
-    } if (msg.content === "->helpkrai"){
+    } if (msg.content === "->LPRank") {
+        msg.reply(LPRanking);
+
+        aux = 1;
+
+    } if (msg.content === "->helpkrai") {
         msg.reply("os comandos são: \n" + 
         "->hoje = Para ver as aulas que aconteceram hj \n" + 
         "->amanhã/amanha = Para ver as aulas que aconteceram amanhã \n" + 
+        "->LPRank = Mostra o ranking das 10 primeiras linguagens de programação mais usadas \n" +
         "->prova = Para ver quando será a próxima prova \n" +
         "->ava = Informa o link do AVA \n" +
         "->dolar = Informa a cotação atual do dolar (Sim, eu não tenho mais nada pra fazer da vida) \n" +
@@ -192,7 +220,7 @@ bot.on("message", msg => {
 
     }
 
-    if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0){
+    if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content + " no servidor " + msg.guild.name + " \n");
         bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content + " no servidor " + msg.guild.name);
 
@@ -200,28 +228,29 @@ bot.on("message", msg => {
 
 });
 
-function formatSchedule(Array){
+function formatSchedule(Array) {
     let schedule = "";
-    for (let i = 0; i < Array.length; i++){
+
+    for (let i = 0; i < Array.length; i++) {
         let aux = 0;
-        if ((i + 1) % 3 === 1){
+        if ((i + 1) % 3 === 1) {
             aux = 0;
 
-        } else if ((i + 1) % 3 === 2){
+        } else if ((i + 1) % 3 === 2) {
             aux = 1;
 
-        } else if ((i + 1) % 3 === 3){
+        } else if ((i + 1) % 3 === 3) {
             aux = 2;
 
         }
 
-        if (aux === 0){
+        if (aux === 0) {
             schedule += Array[i];
 
-        } else if (aux === 1){
+        } else if (aux === 1) {
             schedule += " (" + Array[i] + "): \n";
 
-        } else if (aux === 2){
+        } else if (aux === 2) {
             schedule += Array[i] + " \n";
 
         }
@@ -230,50 +259,52 @@ function formatSchedule(Array){
     return schedule;
 }
 
-function getSchedule(){
+function getSchedule() {
     let date = new Date();
     let td = date.getDay();
     let dateNow = date.getDate();
 
-    if(dateNow > dateAux){
+    if (dateNow > dateAux) {
         firstOfDay = true;
         dateAux = dateNow;
         getExamination();
 
     }
 
-    if(firstOfDay){
+    if (firstOfDay) {
         maintenance = true;
         bot.user.setActivity("Em manutenção!");
+
         today = ["Calma corno, eu tô em manutenção!"];
         tomorrow = ["Calma corno, eu tô em manutenção!"];
+
         console.log("\n===================== Início da manutenção =====================\n");
         //Sunday
-        if(td === 0){
+        if (td === 0) {
             today = ["Hoje é domingo maluko, não enche! Volta amanhã, sua praga" + " \n"];
             setSchedule(td);
     
         //Monday and Tuesday
-        } else if (td === 1 || td === 2){
+        } else if (td === 1 || td === 2) {
             setSchedule(td);
     
         //Wednesday
-        } else if (td === 3){
+        } else if (td === 3) {
             setSchedule(td);
             tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
     
         //Thursday
-        } else if (td === 4){
+        } else if (td === 4) {
             today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
             tomorrow = ["Amanhã é sexta, obvio q a gente não tem aula porra!" + " \n"];
     
         //Friday
-        } else if (td === 5){
+        } else if (td === 5) {
             today = ["Hoje é sexta a gente não tem nenhuma aula, ae krai!" + " \n"];
             tomorrow = ["Amanhã é Sábado, se tu acha que amanhã tem aula então para de usar droga meno" + " \n"];
     
         //Saturday
-        } else if (td === 6){
+        } else if (td === 6) {
             today = ["Menor, hj é sábado, me da descanço porra" + " \n"];
             tomorrow = ["Amanhã é domingo, finge que eu nem existo" + " \n"];
     
@@ -281,16 +312,16 @@ function getSchedule(){
 
         maintenance = false;
         firstOfDay = false;
+        bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
+        console.log("\n===================== Fim da manutenção =====================\n");
     }
-
-    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
 }
 
 async function setSchedule(td) {
     const browser = await pupp.launch();
     const page = await browser.newPage();
 
-    try{
+    try {
         page.goto(config.siga_authUrl);
         await page.waitForNavigation();
         await page.type('input[data-v-bee72fea]', config.username);
@@ -303,10 +334,10 @@ async function setSchedule(td) {
         await page.waitForNavigation();
 
 
-        if(td === 0){
+        if (td === 0) {
             await getLinks(1, tomorrow, page);
         
-        } else if(td === 3) {
+        } else if (td === 3) {
             await getLinks(0, today, page);
 
         } else {
@@ -317,13 +348,14 @@ async function setSchedule(td) {
 
         maintenance = false;
         browser.close();
+        bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
         console.log("\n===================== Fim da manutenção =====================\n");
 
     } catch {
-        if(td === 0){
+        if (td === 0) {
             tomorrow = ["Não foi possível pegar o link das aulas, avise ao corno que me programou!"];
         
-        } else if(td === 3) {
+        } else if (td === 3) {
             today = ["Não foi possível pegar o link das aulas, avise ao corno que me programou!"];
 
         } else {
@@ -340,50 +372,61 @@ async function setSchedule(td) {
     }    
 }
 
-async function getLinks(rightArrowClicks, polutateArray, page){
-    let teacherName = [], hours = [], links = [];
-    meetingsPerDay = 2;
+async function getLinks(rightArrowClicks, polutateArray, page) {
+    let teacherName = [], hours = [], links = [], hoursAux = [];
+    meetingsPerDay = 3;
     
-    for(i = 0; i < meetingsPerDay; i++){
+    for (i = 0; i < meetingsPerDay; i++) {
         await page.reload();
         await page.waitForTimeout(2000);
         const elements = await page.$x('/html/body/div/div[2]/div[3]/main/div[2]/div/div/div/div/div/div[2]/div/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/button[2]');
     
-        for(j = 0; j < rightArrowClicks; j++){
+        for (j = 0; j < rightArrowClicks; j++) {
             await elements[0].click();
             await page.waitForTimeout(2000);
 
         }
 
-        const teacher = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 3) + ") > div.q-item-main.q-item-section > div.q-item-label");
-        teacherName[i] = await (await teacher.getProperty('textContent')).jsonValue();
-
-
-        const hour = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 3) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
-        hours[i] = await (await hour.getProperty('textContent')).jsonValue();
-        auxString = await hours[i].split(" ");
-        hours[i] = await auxString[1].replace(".", "");
-
-        try {
-            await page.waitForTimeout(2000);
-            await page.click("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 3) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
-            
-            const hrefs = await page.waitForSelector('body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div.q-card-main.q-card-container.q-card--main > div > div.app-form > div > div.field-base.field.has-100.field-html > div:nth-child(2) > div > a');
-            links[i] = await (await hrefs.getProperty('href')).jsonValue();
-            await page.goBack();
-
-        } catch {
-            links[i] = "Ainda sem link para essa aula!";
-            getLinkMark[rightArrowClicks + i] = i;
-            await page.reload();
-
+        const elementsLenght = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div");
+        let elementsLenghtAux = await (await elementsLenght.getProperty('textContent')).jsonValue();
+        let valueElements = await elementsLenghtAux.split("more_vert").length - 1;
+        
+        if (valueElements > meetingsPerDay) {
+            meetingsPerDay = valueElements;
         }
         
-        console.log(teacherName[i] + " (" + hours[i] + "): " + links[i] + " \n");
+        const hour = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 1) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
+        hoursAux[i] = await (await hour.getProperty('textContent')).jsonValue();
+        auxString = await hoursAux[i].split(" ");
+        hoursAux[i] = await auxString[1].replace(".", "");
+        console.log(hoursAux[i]);
+        
+        if (hoursAux[i] === "19:00" || hoursAux[i] === "21:00" || hoursAux[i] === "21:50") {
+            const teacher = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 1) + ") > div.q-item-main.q-item-section > div.q-item-label");
+            teacherName.push(await (await teacher.getProperty('textContent')).jsonValue());
+            hours.push(hoursAux[i]);
+
+            try {
+                await page.waitForTimeout(2000);
+                await page.click("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 1) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
+                
+                const hrefs = await page.waitForSelector('body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div.q-card-main.q-card-container.q-card--main > div > div.app-form > div > div.field-base.field.has-100.field-html > div:nth-child(2) > div > a');
+                links.push(await (await hrefs.getProperty('href')).jsonValue());
+                await page.goBack();
+
+            } catch {
+                links.push("Ainda sem link para essa aula!");
+                await page.reload();
+
+            }
+            
+            //console.log(teacherName.pop() + " (" + hours.pop() + "): " + links.pop() + " \n");
+            console.log("Link pego com sucesso!\n\n");
+        }
         
     }
 
-    for(i = 0; i < links.length; i++){
+    for (i = 0; i < links.length; i++) {
         polutateArray[0 + (3*i)] = teacherName[i];
         polutateArray[1 + (3*i)] = hours[i];
         polutateArray[2 + (3*i)] = links[i] + " \n";
@@ -391,11 +434,11 @@ async function getLinks(rightArrowClicks, polutateArray, page){
     }
 }
 
-function getExamination(){
+function getExamination() {
     let date = new Date();
     let todayDate = date.getDate();
 
-    if(todayDate == config.examination_day){
+    if (todayDate == config.examination_day) {
         examination = "A prova é hj e começa " +  config.examination_hour + " fica esperto! \nDigite ->ava para receber o link de onde será realizado a prova!";
 
     } else {
@@ -404,7 +447,7 @@ function getExamination(){
     }
 }
 
-async function getDolar(){
+async function getDolar() {
     const browser = await pupp.launch();
     const page = await browser.newPage();
     page.goto(config.dolar_url);
@@ -414,5 +457,22 @@ async function getDolar(){
     const dolarValue = await (await dolar.getProperty('innerText')).jsonValue();
     await browser.close();
     dolarCurrent = await dolarValue;
+
+}
+
+async function getLPRanking() {
+    const browser = await pupp.launch();
+    const page = await browser.newPage();
+    page.goto(config.LPRanking_url);
+    await page.waitForNavigation();
+
+    for (let i = 0; i < 10; i++){
+        let lp = await page.waitForSelector("#table > table > tbody > tr:nth-child(" + (2 + i) + ") > td:nth-child(3)");
+        const lpValue = await (await lp.getProperty('innerText')).jsonValue();
+        LPRanking.push((i + 1) + "ª " + lpValue);
+
+    }
+
+    await browser.close();
 
 }
