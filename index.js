@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 const config = require("./config.json");
 const cron = require('cron');
 const pupp = require('puppeteer');
+const db = require('./db');
 
 let today = [];
 let tomorrow = [];
@@ -63,8 +64,8 @@ let attScheduleAula2 = new cron.CronJob('00 55 20 * * 1-3', () => {
 
 bot.on("ready", () => {
     dateAux = new Date().getDate();
-    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
-    getSchedule();
+    bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!", {type: 4}); 
+    //getSchedule();
     getDolar();
     getLPRanking();
     scheduledMessage.start();
@@ -80,15 +81,36 @@ bot.on("ready", () => {
 });
 
 bot.on("message", msg => {
+    /*if (msg.member.id == config.gasporId) {
+        const member = msg.member;
+        let testRole = bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == config.setinhaId);
+        member.roles.add(testRole);
+        //member.roles.remove(testRole);
+
+    }*/
+
     aux = 0;
-    if (msg.content === "->hoje") {    
+    if (msg.content === "->hoje") {
         let schedule = formatSchedule(today);
         msg.reply("as aulas de hj para o 3º período são: \n" + schedule + "\n");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
             
+    } if (msg.content === "BABACA") {
+        if (msg.member.id == config.gasporId) {
+            const member = msg.member;
+            let testRole = bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == config.setinhaId);
+            member.roles.add(testRole);
+            //member.roles.remove(testRole);
+
+        }
+
     } if (msg.content === "->amanhã" || msg.content === "->amanha") {
         let schedule = formatSchedule(tomorrow);
         msg.reply("as aulas de amanhã para o 3º período são: \n" + schedule + "\n");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->Js") {
@@ -100,11 +122,14 @@ bot.on("message", msg => {
             msg.reply("PAU NO CU DO JS", attachment);
             
         }
-        
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->secret") {
         msg.reply("Tu acha mesmo que ia ter algum segredo? Tu é burrão mesmo bixo!");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->Sexta") {
@@ -117,6 +142,7 @@ bot.on("message", msg => {
 
         }
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->ramom") {
@@ -129,6 +155,7 @@ bot.on("message", msg => {
         
         }
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->lip") {
@@ -140,7 +167,8 @@ bot.on("message", msg => {
             msg.reply("Da uma mamadinha em mim", attachment);
         
         }
-        
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->max") {
@@ -153,10 +181,13 @@ bot.on("message", msg => {
 
         }
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->ava") {
         msg.reply("Link para o Ava: https://ava.qstione.com.br/");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->natação?") {
@@ -170,6 +201,7 @@ bot.on("message", msg => {
             msg.reply(answers[random]);
         }
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->kmeans") {
@@ -181,21 +213,52 @@ bot.on("message", msg => {
         
         }
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->prova") {
         getExamination(); 
         msg.reply(examination);
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->dolar") {
         getDolar();
         msg.reply("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->LPRank") {
         msg.reply(LPRanking);
 
+        db.updateMoney(msg.guild.id, msg.member.user.id);
+        aux = 1;
+
+    } if (msg.content === "->github") {
+        msg.reply("Link para o github: https://github.com/Gaspor/DiscordBot");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
+        aux = 1;
+
+    } if (msg.content === "->rasengan") {
+        if (msg.member.id == config.gasporId) {
+            const member = msg.member;
+            let testRole = bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == config.setinhaId);
+            member.roles.add(testRole);
+            //member.roles.remove(testRole);
+
+        }
+        //console.log(bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == "690575370759438357")); //GP
+        //console.log(bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == "707747009184006235")); //setinha
+        
+        aux = 1;
+
+    } if (msg.content === "->fs") {
+        bot.channels.cache.get("719970795887001713").send("!fs");
+        
+        db.updateMoney(msg.guild.id, msg.member.user.id);
         aux = 1;
 
     } if (msg.content === "->helpkrai") {
@@ -214,8 +277,47 @@ bot.on("message", msg => {
         "->max = ??? \n" +
         "->natação? = ??? \n" +
         "->secret = É segredo menor, fica xiu! \n" +
+        "->fs = Pra pular música da JBL \n" +
+        "->ic = Vê os comandos do ImaginaCoin \n" +
         "->helpkrai = Mostra a lista de comando e suas funcionalidades \n" + 
+        "Estou no github, se quiser contribuir você pode usar o comando ->github \n" +
         "================= Created by Gaspor =================");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);
+        aux = 1;
+
+    } if (msg.content === "->conta") {
+        db.selectUser(msg.member.user.id, msg, msg.guild.id);
+
+        aux = 1;
+
+    } if (msg.content === "->criar") {
+        db.verifyUser(msg.member.user.id, msg.member.user.tag, msg, msg.guild.id);
+                
+        aux = 1;
+
+    } if (msg.content === "->transferir") {
+        /*const user = msg.member.user.id;
+        db.users(msg.guild.id, msg, user);
+        */
+        msg.reply("Esse comando será implementado em breve krai, relaxa a bunda ae!");
+        aux = 1;
+
+    } if (msg.content === "->ic") {
+        msg.reply("Os comandos do Imagina Wallet são: \n" + 
+        "->conta = Vê as informações da sua conta \n" + 
+        "->criar = Cria uma conta, com saldo inicial de 10.00 \n" + 
+        "->transferir = Em breve! \n" +
+        "Obs: Use os comandos que estão no ->helpkrai para ganhar I₵ 1.00");
+
+        db.updateMoney(msg.guild.id, msg.member.user.id);     
+        aux = 1;
+
+    } if (msg.content === "->comunicado") {
+        const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
+        bot.channels.cache.get(config.general_channel).send("Comunicado oficial da ImaginaWallet! \n " + 
+        "Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala" + attachment);     
+        
         aux = 1;
 
     }
@@ -225,7 +327,6 @@ bot.on("message", msg => {
         bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content + " no servidor " + msg.guild.name);
 
     }
-
 });
 
 function formatSchedule(Array) {
@@ -318,7 +419,7 @@ function getSchedule() {
 }
 
 async function setSchedule(td) {
-    const browser = await pupp.launch();
+    const browser = await pupp.launch({headless: false});
     const page = await browser.newPage();
 
     try {
@@ -332,7 +433,6 @@ async function setSchedule(td) {
         page.goto(config.siga_userUrl);
         
         await page.waitForNavigation();
-
 
         if (td === 0) {
             await getLinks(1, tomorrow, page);
@@ -374,7 +474,7 @@ async function setSchedule(td) {
 
 async function getLinks(rightArrowClicks, polutateArray, page) {
     let teacherName = [], hours = [], links = [], hoursAux = [];
-    meetingsPerDay = 3;
+    meetingsPerDay = 2;
     
     for (i = 0; i < meetingsPerDay; i++) {
         await page.reload();
@@ -410,7 +510,7 @@ async function getLinks(rightArrowClicks, polutateArray, page) {
                 await page.waitForTimeout(2000);
                 await page.click("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 1) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
                 
-                const hrefs = await page.waitForSelector('body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div.q-card-main.q-card-container.q-card--main > div > div.app-form > div > div.field-base.field.has-100.field-html > div:nth-child(2) > div > a');
+                const hrefs = await page.waitForSelector('body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div.q-card-main.q-card-container.q-card--main > div > div.app-form > div > div.field-base.field.has-100.field-html > div:nth-child(2) > div > a', {timeout: 2000});
                 links.push(await (await hrefs.getProperty('href')).jsonValue());
                 await page.goBack();
 
