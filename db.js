@@ -28,24 +28,20 @@ async function connect() {
 
 async function verifyUser(discordID, username, msg, serverID) {
     const client = await connect();
-    const sql = 'SELECT * FROM users WHERE discordid=' + discordID;
+    const sql = 'SELECT * FROM users WHERE discordid=' + discordID + "AND serverid=" + serverID;
 
     await client.query(sql, async function(err, results) {
-        let resultDcId = results.rows.length;
-        console.log("Row count: %d", results.rows.length)
-        const sql = 'SELECT * FROM users WHERE serverid=' + serverID;
-
-        await client.query(sql, async function(err, resultsServer) {
-            let resultServerId = resultsServer.rows.length;
-            console.log("Row count: %d", resultsServer.rows.length)   
-            if ((resultDcId === 0 && resultServerId === 0) || (resultDcId != 0 && resultServerId === 0) || (resultDcId === 0 && resultServerId != 0)) {
+        let result = results.rows.length;
+        console.log("Row count: %d", results.rows.length);
+            if (result === 0) {
                 await insertUser(discordID, username, msg, serverID);
             
             } else {
-                msg.reply("Deu erro nessa porra, pode ser que tu já tenha uma conta!");
+                msg.reply("Deu erro nessa porra, tu já tenha uma conta aqui carai!");
             
-            }})
-    });
+            }
+        }
+    );
 }
 
 async function insertUser(discordID, username, msg, serverID) {
@@ -65,10 +61,12 @@ async function selectUser(discordID, msg, serverID) {
     await client.query(sql, async function(err, results) {
         let result = results.rows.length;
         console.log("Row count: %d", results.rows.length);
+
         if(result > 0) {
             msg.reply("Número da conta: " + results.rows[0].id + "\n " +
             "Usuário: " + results.rows[0].username + "\n " +
             "Saldo: " + results.rows[0].wallet);
+
         } else {
             msg.reply("Você ainda não tem uma conta nessa porra de Server, para criar uma digite ->criar");
 
@@ -76,7 +74,7 @@ async function selectUser(discordID, msg, serverID) {
     });
 }
 
-async function updateMoney(serverID, discordID) {
+async function updateMoney(serverID, discordID, value) {
     const client = await connect();
     console.log("Atualizando dados...");
     const sql = 'SELECT * FROM users WHERE serverid=' + serverID + 'AND discordID=' + discordID;
@@ -84,7 +82,7 @@ async function updateMoney(serverID, discordID) {
         let result = results.rows.length;
         console.log("Row count: %d", results.rows.length);
         if(result > 0) {
-            newWalletValue = parseFloat(results.rows[0].wallet) + 1;
+            newWalletValue = parseFloat(results.rows[0].wallet) + value;
             console.log(newWalletValue);
             const sqlUpdate = 'UPDATE users SET wallet=$1 WHERE serverid=' + serverID + 'AND discordID=' + discordID;
             const values = [newWalletValue];
@@ -93,57 +91,64 @@ async function updateMoney(serverID, discordID) {
 
         }
     });
-
 }
 
-/*async function pagarMax(){
+async function transferMoney(msg, value, user, server, receiverDiscordID, receiverAccountID) {
     const client = await connect();
-    const sql = 'SELECT * FROM users WHERE serverid=690573745517232279 AND discordID=687432716769034240';
+    let sql = 'SELECT * FROM users WHERE serverid=' + server + 'AND discordID=' + user;
     await client.query(sql, async function(err, results) {
         let result = results.rows.length;
         console.log("Row count: %d", results.rows.length);
-        if(result > 0) {
-            newWalletValue = parseFloat(results.rows[0].wallet) + 100;
-            console.log(newWalletValue);
-            const sqlUpdate = 'UPDATE users SET wallet=$1 WHERE serverid=690573745517232279 AND discordID=687432716769034240';
-            const values = [newWalletValue];
-            await client.query(sqlUpdate, values);
-            console.log("Dado atualizado com sucesso");
+        if (result > 0 && receiverDiscordID != 0) {
+            sql = 'SELECT * FROM users WHERE serverid=' + server + 'AND discordID=' + receiverDiscordID;
+            await client.query(sql, async function(err, resultsReceiver) {
+                result = resultsReceiver.rows.length;
+                console.log("Row count: %d", resultsReceiver.rows.length);
 
-        }
-    });
-}*/
+                if (result > 0) {
+                    try {
+                        await updateMoney(msg.guild.id, receiverDiscordID, value);
+                        await updateMoney(msg.guild.id, msg.member.user.id, -value);
+                        msg.reply("Transferência bem sucedida!");
+        
+                    } catch {
+                        msg.reply("Erro ao fazer a transferência!");
+        
+                    }
+                } else {
+                    msg.reply("Erro, não foi encontrado nenhum usuário com esse discordID!");
 
-/*async function users(serverID, msg, user){
-    const client = await connect();
-    console.log("Buscando Users...");
-    const sql = 'SELECT * FROM users WHERE serverid=' + serverID;
-    await client.query(sql, async function(err, results) {
-        let result = results.rows.length;
-        console.log("Row count: %d", results.rows.length);
-        if(result > 0) {
-            let allUsers = "Usuários que você pode transferir dinheiro\n";
-            for (let i = 0; i < result; i++) {
-                allUsers += results.rows[i].id + " - " + results.rows[i].username + "\n";
-            }
-            allUsers += "Pra qual usuário você deseja transferir dinheiro?";
-            msg.reply(allUsers);
+                }
+            });
 
-            if (msg.member.user.id === user){
-                transferMoney(msg.member.user.id, msg, msg.guild.id, msg.guild.id);
-    
-            }
-            
+        } else if (result > 0 && receiverAccountID != 0) {
+            sql = 'SELECT * FROM users WHERE serverid=' + server + 'AND id=' + receiverAccountID;
+            await client.query(sql, async function(err, resultsReceiver) {
+                result = resultsReceiver.rows.length;
+                console.log("Row count: %d", resultsReceiver.rows.length);
+
+                if (result > 0) {
+                    try {
+                        let discordID = resultsReceiver.rows[0].discordid;
+                        await updateMoney(msg.guild.id, discordID, value);
+                        await updateMoney(msg.guild.id, msg.member.user.id, -value);
+                        msg.reply("Transferência bem sucedida!");
+        
+                    } catch {
+                        msg.reply("Erro ao fazer a transferência!");
+        
+                    }
+                } else {
+                    msg.reply("Erro, não foi encontrado nenhum usuário com esse ID de conta nesse servidor!");
+
+                }
+            });
+
         } else {
-            msg.reply("Você ainda não tem uma conta nessa porra de Server, para criar uma digite ->criar");
+            msg.reply("Erro, não foi possível encontrar a sua conta nesse servidor!");
 
         }
     });
-
 }
 
-async function transferMoney(discordID, msg, serverID, receiver) {
-    msg.reply("Transferência bem sucedida!");
-}*/
-
-module.exports = {connect, verifyUser, selectUser, updateMoney, pagarMax};
+module.exports = {connect, verifyUser, selectUser, updateMoney, transferMoney};
