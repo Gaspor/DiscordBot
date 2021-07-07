@@ -1,0 +1,30 @@
+{
+    "siga_authUrl": "SIGA_LOGIN_URL",
+    "siga_userUrl": "SIGA_MAIN_URL",
+    "dolar_url": "https://www.google.com/search?client=opera-gx&q=dolar&sourceid=opera&ie=UTF-8&oe=UTF-8",
+    "LPRanking_url": "https://pypl.github.io/PYPL.html",
+    
+    "log_channel": "LOG_CHANNEL_ID",
+    "general_channel": "GENERAL_CHANNEL_ID",
+    "tests_channel": "TESTS_CHANNEL_ID",
+    "botTestesId": "TEST_CHANNEL_ID",
+    "JogoMinimalistaId": "MAIN_CHANNEL_ID",
+    "setinhaId": "ROLE_ID",
+    "gasporId": "USER_ID",
+    
+    "examination_day": "DAY",
+    "examination_month": "MONTH",
+    "examination_year": "YEAR",
+    "examination_hour": "HOUR",
+
+    "token": "DISCORD_TOKEN",
+    "username": "SIGA_USERNAME",
+    "password": "SIGA_PASSWORD",
+
+    "db_username": "USERNAME",
+    "db_password": "PASSWORD",
+    "db_port": "PORT",
+    "db_name": "NAME",
+    "db_server": "HOST"
+
+}

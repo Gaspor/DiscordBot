@@ -66,8 +66,8 @@ bot.on("ready", () => {
     in40minMessage.start();
     examinationEnd.start();
     attSchedule.start();
-    attScheduleAula1.start();
-    attScheduleAula2.start();
+    //attScheduleAula1.start();
+    //attScheduleAula2.start();
     console.log("Bot started in " + bot.guilds.cache.size + " servers!\n");
     bot.channels.cache.get(config.log_channel).send('\n\n\n=======================================================\nBot started '  + bot.guilds.cache.size +  ' servers!');
 
