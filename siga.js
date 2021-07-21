@@ -45,7 +45,7 @@ function getSchedule(dateAux, myBot) {
     let dateNow = date.getDate();
     let inVacation;
 
-    if (date.getMonth() > 6) {
+    if (date.getMonth() >= config.vacation_month && date.getDate() >= config.vacation_day) {
         inVacation = false;
     
     } else {
@@ -65,12 +65,12 @@ function getSchedule(dateAux, myBot) {
 
     if (firstOfDay && !inVacation) {
         maintenance = true;
+        console.log("\n===================== Start of Maintenance =====================\n");
+        
         bot.user.setActivity("Em manutenção!");
-
         today = ["Calma corno, eu tô em manutenção!"];
         tomorrow = ["Calma corno, eu tô em manutenção!"];
-
-        console.log("\n===================== Start of Maintenance =====================\n");
+        
         //Sunday
         if (td === 0) {
             today = ["Hoje é domingo maluko, não enche! Volta amanhã, sua praga" + " \n"];

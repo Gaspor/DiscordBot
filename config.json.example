@@ -17,6 +17,9 @@
     "examination_year": "YEAR",
     "examination_hour": "HOUR",
 
+    "vacation_day": "DAY",
+    "vacation_month": "MONTH",
+
     "token": "DISCORD_TOKEN",
     "username": "SIGA_USERNAME",
     "password": "SIGA_PASSWORD",
