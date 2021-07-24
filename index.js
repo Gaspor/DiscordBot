@@ -6,6 +6,7 @@ const db = require('./db');
 const siga = require('./siga');
 const ic = require('./ICcommands');
 const fun = require('./funnyCommands');
+const fetch = require("node-fetch");
 
 let dateAux;
 
@@ -61,11 +62,11 @@ bot.on("ready", () => {
     dateAux = new Date().getDate();
     bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
     siga.getSchedule(dateAux, bot);
-    scheduledMessage.start();
-    examinationMessage.start();
-    in40minMessage.start();
-    examinationEnd.start();
-    attSchedule.start();
+    //scheduledMessage.start();
+    //examinationMessage.start();
+    //in40minMessage.start();
+    //examinationEnd.start();
+    //attSchedule.start();
     //attScheduleAula1.start();
     //attScheduleAula2.start();
     console.log("Bot started in " + bot.guilds.cache.size + " servers!\n");
@@ -168,6 +169,36 @@ bot.on("message", msg => {
         
         aux = 1;
 
+    } if (msg.content === "->yt") {
+        const voiceChannel = msg.member.voice.channel;
+        if (!voiceChannel){
+            msg.reply("Entra em um canal primeiro, oh seu animal!")
+        
+        } else {
+            fetch(
+                `https://discord.com/api/v8/channels/${voiceChannel.id}/invites`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        max_age: 21600,
+                        max_users: 0,
+                        target_application_id: "755600276941176913", //Youtube ID
+                        target_type: 2,
+                        temporary: false,
+                        validate: null
+                    }),
+                    headers: {
+                        "Authorization": `Bot ${config.token}`,
+                        "Content-Type": "application/json"
+                    }
+                } 
+            ).then(res => res.json()).then(invite => {
+                if(!invite.code) return msg.reply("Deu B.O!");
+                const embed = new Discord.MessageEmbed().setTitle("Clicka no pai pra assistir Youtube").setURL(`https://discord.com/invite/${invite.code}`).setAuthor("Youtube");
+                msg.channel.send(embed);
+            })
+    }
+
+        aux = 1;
     }
 
     ic.icCommands(msg, aux);
