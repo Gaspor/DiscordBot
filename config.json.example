@@ -3,6 +3,7 @@
     "siga_userUrl": "SIGA_MAIN_URL",
     "dolar_url": "https://www.google.com/search?client=opera-gx&q=dolar&sourceid=opera&ie=UTF-8&oe=UTF-8",
     "LPRanking_url": "https://pypl.github.io/PYPL.html",
+    "prefix": "prefix",
     
     "log_channel": "LOG_CHANNEL_ID",
     "general_channel": "GENERAL_CHANNEL_ID",

@@ -6,7 +6,7 @@ const db = require('./db');
 const siga = require('./siga');
 const ic = require('./ICcommands');
 const fun = require('./funnyCommands');
-const fetch = require("node-fetch");
+const mg = require('./minigames');
 
 let dateAux;
 
@@ -169,40 +169,11 @@ bot.on("message", msg => {
         
         aux = 1;
 
-    } if (msg.content === "->yt") {
-        const voiceChannel = msg.member.voice.channel;
-        if (!voiceChannel){
-            msg.reply("Entra em um canal primeiro, oh seu animal!")
-        
-        } else {
-            fetch(
-                `https://discord.com/api/v8/channels/${voiceChannel.id}/invites`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        max_age: 21600,
-                        max_users: 0,
-                        target_application_id: "755600276941176913", //Youtube ID
-                        target_type: 2,
-                        temporary: false,
-                        validate: null
-                    }),
-                    headers: {
-                        "Authorization": `Bot ${config.token}`,
-                        "Content-Type": "application/json"
-                    }
-                } 
-            ).then(res => res.json()).then(invite => {
-                if(!invite.code) return msg.reply("Deu B.O!");
-                const embed = new Discord.MessageEmbed().setTitle("Clicka no pai pra assistir Youtube").setURL(`https://discord.com/invite/${invite.code}`).setAuthor("Youtube");
-                msg.channel.send(embed);
-            })
-    }
-
-        aux = 1;
     }
 
     ic.icCommands(msg, aux);
     fun.funnyCommands(msg, aux);
+    mg.minigames(msg, aux);
 
     if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content + " no servidor " + msg.guild.name + " \n");
