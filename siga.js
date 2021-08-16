@@ -45,7 +45,7 @@ function getSchedule(dateAux, myBot) {
     let dateNow = date.getDate();
     let inVacation;
 
-    if (date.getMonth() >= config.vacation_month && date.getDate() >= config.vacation_day) {
+    if ((date.getMonth() + 1 >= config.vacation_month && date.getDate() >= config.vacation_day) || (date.getMonth() + 1 > config.vacation_month)) {
         inVacation = false;
     
     } else {
@@ -76,7 +76,7 @@ function getSchedule(dateAux, myBot) {
             today = ["Hoje é domingo maluko, não enche! Volta amanhã, sua praga" + " \n"];
             async function getInfo(){
                 await setSchedule(td);
-                formatSchedule(tomorrow);
+                tomorrow = formatSchedule(tomorrow);
 
             }
 
@@ -86,8 +86,8 @@ function getSchedule(dateAux, myBot) {
         } else if (td === 1 || td === 2) {
             async function getInfo(){
                 await setSchedule(td);
-                formatSchedule(today);
-                formatSchedule(tomorrow);
+                today = formatSchedule(today);
+                tomorrow = formatSchedule(tomorrow);
 
             }
             getInfo();
@@ -96,15 +96,24 @@ function getSchedule(dateAux, myBot) {
         } else if (td === 3) {
             async function getInfo(){
                 await setSchedule(td);
-                formatSchedule(today);
-            
+                today = formatSchedule(today);
+                tomorrow = formatSchedule(tomorrow);
+
             }
             getInfo();
-            tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
+
+            //tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
     
         //Thursday
         } else if (td === 4) {
-            today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
+            async function getInfo(){
+                await setSchedule(td);
+                today = formatSchedule(today);
+            
+            }
+            getInfo();
+
+            //today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
             tomorrow = ["Amanhã é sexta, obvio q a gente não tem aula porra!" + " \n"];
             maintenance = false;
     
@@ -150,7 +159,7 @@ async function setSchedule(td) {
         if (td === 0) {
             await getLinks(1, tomorrow, page);
         
-        } else if (td === 3) {
+        } else if (td === 4) {
             await getLinks(0, today, page);
 
         } else {
@@ -159,6 +168,8 @@ async function setSchedule(td) {
 
         }
 
+        bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!");
+        console.log("\n===================== End of Maintenance =====================\n");
         maintenance = false;
         browser.close();
 
@@ -255,9 +266,12 @@ function getExamination() {
         examination = "A prova será no dia: " + config.examination_day + "/" + config.examination_month + "/" + config.examination_year;
 
     }
+
+    return examination;
 }
 
 function getExaminationInfo() {
+    examination = getExamination();
     return examination;
 }
 
