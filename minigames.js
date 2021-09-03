@@ -7,7 +7,7 @@ async function minigames(msg, aux, bot) {
     aux = 0;
     
     if (msg.content.toLowerCase() === "->yt") {
-        if (commandsMinigames[0].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsMinigames[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const voiceChannel = msg.member.voice.channel;
             if (!voiceChannel){
                 msg.reply("Entra em um canal primeiro, oh seu animal!")
@@ -45,7 +45,7 @@ async function minigames(msg, aux, bot) {
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->poker") {
-        if (commandsMinigames[1].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsMinigames[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const voiceChannel = msg.member.voice.channel;
             if (!voiceChannel){
                 msg.reply("Entra em um canal primeiro, oh seu animal!")
@@ -81,7 +81,7 @@ async function minigames(msg, aux, bot) {
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->betrayal") {
-        if (commandsMinigames[2].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsMinigames[2].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const voiceChannel = msg.member.voice.channel;
             if (!voiceChannel){
                 msg.reply("Entra em um canal primeiro, oh seu animal!")
@@ -118,7 +118,7 @@ async function minigames(msg, aux, bot) {
         aux = 1;    
 
     } if (msg.content.toLowerCase() === "->fishing") {
-        if (commandsMinigames[3].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsMinigames[3].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const voiceChannel = msg.member.voice.channel;
             if (!voiceChannel){
                 msg.reply("Entra em um canal primeiro, oh seu animal!")

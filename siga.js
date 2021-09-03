@@ -97,12 +97,12 @@ function getSchedule(dateAux, myBot) {
             async function getInfo(){
                 await setSchedule(td);
                 today = formatSchedule(today);
-                tomorrow = formatSchedule(tomorrow);
+                //tomorrow = formatSchedule(tomorrow);
 
             }
             getInfo();
 
-            //tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
+            tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
     
         //Thursday
         } else if (td === 4) {
@@ -111,9 +111,9 @@ function getSchedule(dateAux, myBot) {
                 today = formatSchedule(today);
             
             }
-            getInfo();
+            //getInfo();
 
-            //today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
+            today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
             tomorrow = ["Amanhã é sexta, obvio q a gente não tem aula porra!" + " \n"];
             maintenance = false;
     
@@ -260,7 +260,7 @@ function getExamination() {
     let todayDate = date.getDate();
 
     if (todayDate == config.examination_day) {
-        examination = "A prova é hj e começa " +  config.examination_hour + " fica esperto! \nDigite ->ava para receber o link de onde será realizado a prova!";
+        examination = "A prova é hj e começa " +  config.examination_hour + " fica esperto que vai ser presencial! \n";
 
     } else {
         examination = "A prova será no dia: " + config.examination_day + "/" + config.examination_month + "/" + config.examination_year;

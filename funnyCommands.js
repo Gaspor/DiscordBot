@@ -7,21 +7,21 @@ function funnyCommands(msg, aux, bot){
     aux = 0;
 
     if (msg.content.toLowerCase() === "->js") {
-        if (commands[10].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[10].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const attachment = new Discord.MessageAttachment("assets/Js.jpg");
             
             msg.reply("PAU NO CU DO JS", attachment);
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(commands["commandUnavailable"]);
+            msg.reply(commandUnavailable);
 
         }
         
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->secret") {
-        if (commands[9].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[9].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             msg.reply("Tu acha mesmo que ia ter algum segredo? Tu é burrão mesmo bixo!");
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
@@ -33,62 +33,62 @@ function funnyCommands(msg, aux, bot){
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->sexta") {
-        if (commands[11].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[11].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const attachment = new Discord.MessageAttachment("assets/sexta.jpeg");
             msg.reply("Com todo respeito, VAI TE FUDER SEXTA!!!", attachment);
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->ramom") {
-        if (commands[13].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[13].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const attachment = new Discord.MessageAttachment("assets/ramom.jpg");
             msg.reply("Vai pra pqp menor!", attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->lip") {
-        if (commands[12].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[12].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const attachment = new Discord.MessageAttachment("assets/lipzera.png");
             msg.reply("Da uma mamadinha em mim", attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->max") {
-        if (commands[14].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[14].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const attachment = new Discord.MessageAttachment("assets/hakiman.png");
             msg.reply(attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->natação?") {
-        if (commands[15].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[15].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             answers = ["Meu pau na sua mão", "Te comi e tu achou bão", "Me da um mamadão"];
             
             random = Math.floor(Math.random() * answers.length);    
@@ -96,19 +96,19 @@ function funnyCommands(msg, aux, bot){
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->kmeans") {
-        if (commands[16].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[16].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             msg.reply("Sei de nada desse assunto não menor, não enche! (Só sei que essa porra de assunto é chatão)");
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
         } else {
-            msg.reply(msg.reply(commands["commandUnavailable"]))
+            msg.reply(commandUnavailable);
 
         }
 

@@ -6,7 +6,7 @@ function icCommands(msg, aux, bot) {
     aux = 0;
 
     if (msg.content.toLowerCase() === "->conta") {
-        if (commandsIC[0].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsIC[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             db.selectUser(msg.member.user.id, msg, msg.guild.id);
 
         } else {
@@ -17,7 +17,7 @@ function icCommands(msg, aux, bot) {
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->criar") {
-        if (commandsIC[1].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsIC[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             db.verifyUser(msg.member.user.id, msg.member.user.tag, msg, msg.guild.id);
 
         } else {
@@ -28,7 +28,7 @@ function icCommands(msg, aux, bot) {
         aux = 1;
 
     } if (msg.content.toLowerCase().startsWith("->transferir")) {
-        if (commandsIC[2].onlyIn.find(element => element == msg.guild.id)){
+        if (commandsIC[2].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             const command = msg.content.toLowerCase();
             const commandSplit = command.split(" ");
     
@@ -52,11 +52,11 @@ function icCommands(msg, aux, bot) {
         aux = 1;
 
     } if (msg.content.toLowerCase() === "->ic") {
-        if (commands[17].onlyIn.find(element => element == msg.guild.id)){
+        if (commands[17].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
             let message = "Os comandos do Imagina Wallet são: \n";
     
             commandsIC.forEach((value) => {
-                if (value.onlyIn.find(element => element == msg.guild.id)) {
+                if (value.onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))) {
                     message += value.commandExample + " = " + value.description + "\n";
     
                 }
