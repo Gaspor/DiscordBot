@@ -2,8 +2,8 @@ const db = require('./db');
 const config = require("./config.json");
 const { commandsIC, commandUnavailable, commands } = require('./commands');
 
-function icCommands(msg, aux, bot) {
-    aux = 0;
+function icCommands(msg, commandUsed, bot) {
+    commandUsed = false;
 
     if (msg.content.toLowerCase() === "->conta") {
         if (commandsIC[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -14,7 +14,7 @@ function icCommands(msg, aux, bot) {
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->criar") {
         if (commandsIC[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -25,7 +25,7 @@ function icCommands(msg, aux, bot) {
 
         }
                 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase().startsWith("->transferir")) {
         if (commandsIC[2].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -49,7 +49,8 @@ function icCommands(msg, aux, bot) {
             msg.reply(commandUnavailable);
 
         }
-        aux = 1;
+
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->ic") {
         if (commands[17].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -70,9 +71,12 @@ function icCommands(msg, aux, bot) {
             msg.reply(commandUnavailable);
 
         }
-        aux = 1;
+        
+        commandUsed = true;
 
-    } if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0) {
+    } 
+    
+    if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
         bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
 

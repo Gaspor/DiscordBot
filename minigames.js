@@ -3,8 +3,8 @@ const config = require("./config.json");
 const Discord = require("discord.js");
 const { commandsMinigames, commandUnavailable } = require("./commands");
 
-async function minigames(msg, aux, bot) {
-    aux = 0;
+async function minigames(msg, commandUsed, bot) {
+    commandUsed = false;
     
     if (msg.content.toLowerCase() === "->yt") {
         if (commandsMinigames[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -41,8 +41,7 @@ async function minigames(msg, aux, bot) {
 
         }
 
-
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->poker") {
         if (commandsMinigames[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -78,7 +77,7 @@ async function minigames(msg, aux, bot) {
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->betrayal") {
         if (commandsMinigames[2].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -114,8 +113,7 @@ async function minigames(msg, aux, bot) {
 
         }
 
-
-        aux = 1;    
+        commandUsed = true;    
 
     } if (msg.content.toLowerCase() === "->fishing") {
         if (commandsMinigames[3].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -151,10 +149,10 @@ async function minigames(msg, aux, bot) {
 
         }
 
-        aux = 1;    
+        commandUsed = true;    
     }
 
-    if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0) {
+    if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
         bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
 

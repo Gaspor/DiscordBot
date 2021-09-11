@@ -40,7 +40,7 @@ const commands = [{
     /* 3 */
     commandExample : "->prova",
     onlyIn: [
-        config.JogoMinimalistaId, 
+        config.JogoMinimalistaId,
         config.botTestesId, 
         config.facul_serverID
     ],

@@ -111,7 +111,7 @@ function getSchedule(dateAux, myBot) {
                 today = formatSchedule(today);
             
             }
-            //getInfo();
+            getInfo();
 
             today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
             tomorrow = ["Amanhã é sexta, obvio q a gente não tem aula porra!" + " \n"];
@@ -194,9 +194,9 @@ async function setSchedule(td) {
     }    
 }
 
-async function getLinks(rightArrowClicks, polutateArray, page) {
+async function getLinks(rightArrowClicks, populateArray, page) {
     let teacherName = [], hours = [], links = [], hoursAux = [];
-    meetingsPerDay = 2;
+    meetingsPerDay = 1;
     
     for (i = 0; i < meetingsPerDay; i++) {
         await page.reload();
@@ -212,6 +212,11 @@ async function getLinks(rightArrowClicks, polutateArray, page) {
         const elementsLenght = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div");
         let elementsLenghtAux = await (await elementsLenght.getProperty('textContent')).jsonValue();
         let valueElements = await elementsLenghtAux.split("more_vert").length - 1;
+
+        if (valueElements < 1) {
+            populateArray[0] = ["Não teremos aulas hoje!"];
+            return;
+        }
         
         if (valueElements > meetingsPerDay) {
             meetingsPerDay = valueElements;
@@ -248,9 +253,9 @@ async function getLinks(rightArrowClicks, polutateArray, page) {
     }
 
     for (i = 0; i < links.length; i++) {
-        polutateArray[0 + (3*i)] = teacherName[i];
-        polutateArray[1 + (3*i)] = hours[i];
-        polutateArray[2 + (3*i)] = links[i] + " \n";
+        populateArray[0 + (3*i)] = teacherName[i];
+        populateArray[1 + (3*i)] = hours[i];
+        populateArray[2 + (3*i)] = links[i] + " \n";
     
     }
 }

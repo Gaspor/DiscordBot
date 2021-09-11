@@ -3,8 +3,8 @@ const Discord = require("discord.js");
 const config = require("./config.json");
 const { commands, commandUnavailable } = require('./commands');
 
-function funnyCommands(msg, aux, bot){
-    aux = 0;
+function funnyCommands(msg, commandUsed, bot){
+    commandUsed = false;
 
     if (msg.content.toLowerCase() === "->js") {
         if (commands[10].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -18,7 +18,7 @@ function funnyCommands(msg, aux, bot){
 
         }
         
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->secret") {
         if (commands[9].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -30,7 +30,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->sexta") {
         if (commands[11].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -43,7 +43,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->ramom") {
         if (commands[13].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -57,7 +57,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->lip") {
         if (commands[12].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -71,7 +71,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->max") {
         if (commands[14].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -85,7 +85,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->natação?") {
         if (commands[15].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -100,7 +100,7 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
+        commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->kmeans") {
         if (commands[16].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
@@ -112,9 +112,11 @@ function funnyCommands(msg, aux, bot){
 
         }
 
-        aux = 1;
-
-    } if (msg.member.user.tag != "RogerinPokaBala#9006" && aux != 0) {
+        commandUsed = true;
+        
+    } 
+    
+    if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
         bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
 
