@@ -150,6 +150,42 @@ async function minigames(msg, commandUsed, bot) {
         }
 
         commandUsed = true;    
+
+    } if (msg.content.toLowerCase() === "->chess") {
+        if (commandsMinigames[4].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+            const voiceChannel = msg.member.voice.channel;
+            if (!voiceChannel){
+                msg.reply("Entra em um canal primeiro, oh seu animal!")
+            
+            } else {
+                fetch(
+                    `https://discord.com/api/v8/channels/${voiceChannel.id}/invites`, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            max_age: 21600,
+                            max_users: 0,
+                            target_application_id: "832012774040141894", //Chess ID
+                            target_type: 2,
+                            temporary: false,
+                            validate: null
+                        }),
+                        headers: {
+                            "Authorization": `Bot ${config.token}`,
+                            "Content-Type": "application/json"
+                        }
+                    } 
+                ).then(res => res.json()).then(invite => {
+                    if(!invite.code) return msg.reply("Deu B.O!");
+                    const embed = new Discord.MessageEmbed().setTitle("Clicka no pai pra jogar um xadrezin").setURL(`https://discord.com/invite/${invite.code}`).setAuthor("Xadrãozada");
+                    msg.channel.send(embed);
+                })
+            }
+        } else {
+            msg.reply(commandUnavailable);
+
+        }
+
+        commandUsed = true;
     }
 
     if (commandUsed) {

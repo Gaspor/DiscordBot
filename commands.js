@@ -253,6 +253,18 @@ const commandsMinigames = [{
     ],
 
     description : "Jogar um jogo de pescaria muito brabo mesmo, confia"
+},
+{
+    /* 4 */
+    commandExample : "->chess",
+    onlyIn: [
+        config.JogoMinimalistaId, 
+        config.botTestesId, 
+        config.facul_serverID,
+        config.all_servers
+    ],
+
+    description : "Jogar um Xadrezin brabo"
 }]
 
 const commandsIC = [{ 
