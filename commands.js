@@ -1,4 +1,4 @@
-equire('dotenv').config();
+require('dotenv').config();
 
 const commandUnavailable = "Este comando não está disponível neste servidor!";
 
