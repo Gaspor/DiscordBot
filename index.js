@@ -220,12 +220,12 @@ bot.on("message", msg => {
     
             commandUsed = true;
     
-        }/* if (msg.content.toLowerCase() === "->minigames") {
-            if (commands[8].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        } if (msg.content.toLowerCase() === "->minigames") {
+            if (commands[8].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 let message = "Os minigames são: \n";
         
                 commandsMinigames.forEach((value) => {
-                    if (value.onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))) {
+                    if (value.onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                         message += value.commandExample + " = " + value.description + "\n";
         
                     }
@@ -242,7 +242,7 @@ bot.on("message", msg => {
     
             commandUsed = true;
     
-        } if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == config.gasporId && msg.guild.id === config.botTestesId) {
+        } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == config.gasporId && msg.guild.id === config.botTestesId) {
             const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
             const message = "Comunicado oficial da ImaginaWallet! \n Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala";
             bot.channels.cache.get(config.log_channel).send(message, attachment);
