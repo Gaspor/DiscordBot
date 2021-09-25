@@ -1,4 +1,4 @@
-const config = require("./config.json");
+equire('dotenv').config();
 
 const commandUnavailable = "Este comando não está disponível neste servidor!";
 
@@ -6,9 +6,9 @@ const commands = [{
     /* 0 */
     commandExample : "->hoje",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID
     ],
 
     description : "Para ver as aulas que aconteceram hj"
@@ -17,9 +17,9 @@ const commands = [{
     /* 1 */
     commandExample : "->amanhã/amanha",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID
     ],
 
     description : "Para ver as aulas que aconteceram amanhã"
@@ -28,10 +28,10 @@ const commands = [{
     /* 2 */
     commandExample : "->lprank",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Mostra o ranking das 10 primeiras linguagens de programação mais usadas"
@@ -40,9 +40,9 @@ const commands = [{
     /* 3 */
     commandExample : "->prova",
     onlyIn: [
-        config.JogoMinimalistaId,
-        config.botTestesId, 
-        config.facul_serverID
+        process.env.JOGOMINIMALISTAID,
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID
     ],
 
     description : "Para ver quando será a próxima prova"
@@ -50,9 +50,10 @@ const commands = [{
 {
     /* 4 */
     commandExample : "->ava",
-    onlyIn: [config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID
+    onlyIn: [
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID
     ],
 
     description : "Informa o link do AVA"
@@ -61,10 +62,10 @@ const commands = [{
     /* 5 */
     commandExample : "->dolar",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
     
     description : "Informa a cotação atual do dolar (Sim, eu não tenho mais nada pra fazer da vida)"
@@ -73,10 +74,10 @@ const commands = [{
     /* 6 */
     commandExample : "->github",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
     
     description : "Para ver o github do projeto"
@@ -85,10 +86,10 @@ const commands = [{
     /* 7 */
     commandExample : "->helpkrai",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Mostra a lista de comando e suas funcionalidades"
@@ -97,10 +98,10 @@ const commands = [{
     /* 8 */
     commandExample : "->minigames",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Mostra a lista de minigames que tem no bot"
@@ -111,9 +112,9 @@ const commands = [{
     /* 9 */
     commandExample : "->secret",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID,
+        process.env.ALL_SERVERS
     ],
 
     description : "É segredo menor, fica xiu!"
@@ -122,8 +123,8 @@ const commands = [{
     /* 10 */
     commandExample : "->js",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
     ],
 
     description : "???"
@@ -132,8 +133,8 @@ const commands = [{
     /* 11 */
     commandExample : "->sexta",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
     ],
 
     description : "???"
@@ -142,8 +143,8 @@ const commands = [{
     /* 12 */
     commandExample : "->lip",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
     ],
 
     description : "???"
@@ -152,8 +153,8 @@ const commands = [{
     /* 13 */
     commandExample : "->ramom",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
     ],
 
     description : "???"
@@ -162,8 +163,8 @@ const commands = [{
     /* 14 */
     commandExample : "->max",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
     ],
 
     description : "???"
@@ -172,10 +173,10 @@ const commands = [{
     /* 15 */
     commandExample : "->natação?",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "???"
@@ -184,9 +185,9 @@ const commands = [{
     /* 16 */
     commandExample : "->kmeans",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID
     ],
 
     description : "???"
@@ -197,10 +198,10 @@ const commands = [{
     /* 17 */
     commandExample : "->ic",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Mostra os comandos do ImaginaCoin"
@@ -210,10 +211,10 @@ const commandsMinigames = [{
     /* 0 */
     commandExample : "->yt",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Para assistir youtube com os amiguinhos em call"
@@ -222,10 +223,10 @@ const commandsMinigames = [{
     /* 1 */
     commandExample : "->poker",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Jogar aquele pokerzão em call"
@@ -234,10 +235,10 @@ const commandsMinigames = [{
     /* 2 */
     commandExample : "->betrayal",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Jogar o among us de baixo orçamento"
@@ -246,10 +247,10 @@ const commandsMinigames = [{
     /* 3 */
     commandExample : "->fishing",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Jogar um jogo de pescaria muito brabo mesmo, confia"
@@ -258,10 +259,10 @@ const commandsMinigames = [{
     /* 4 */
     commandExample : "->chess",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Jogar um Xadrezin brabo"
@@ -271,10 +272,10 @@ const commandsIC = [{
     /* 0 */
     commandExample : "->conta",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Vê as informações da sua conta"
@@ -283,10 +284,10 @@ const commandsIC = [{
     /* 1 */
     commandExample : "->criar",
     onlyIn: [
-        config.JogoMinimalistaId,
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID,
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Cria uma conta, com saldo inicial de 10.00"
@@ -295,10 +296,10 @@ const commandsIC = [{
     /* 2 */
     commandExample : "->transferir [valor] [Discord Id da pessoa] [Id da conta]",
     onlyIn: [
-        config.JogoMinimalistaId, 
-        config.botTestesId, 
-        config.facul_serverID,
-        config.all_servers
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID, 
+        process.env.FACUL_SERVERID,
+        process.env.ALL_SERVERS
     ],
 
     description : "Transfere uma quantia em imaginacoin para a pessoa com esse Discord ID ou com esse id da conta"

@@ -93,13 +93,13 @@ bot.on("message", msg => {
         msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor");
     
     } else {
-        /*if (msg.member.id == config.gasporId && msg.guild.id === config.JogoMinimalistaId) {
+        /*if (msg.member.id == config.gasporId && msg.guild.id === process.env.JOGOMINIMALISTAID) {
             const member = msg.member;
-            let testRole = bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == config.setinhaId);
+            let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == config.setinhaId);
             member.roles.add(testRole);
     
         } if (msg.content.toLowerCase() === "->hoje") {
-            if (commands[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+            if (commands[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 let schedule = siga.getToday();
                 msg.reply("as aulas de hj para o 4º período são: \n" + schedule + "\n");
     
@@ -111,7 +111,7 @@ bot.on("message", msg => {
             commandUsed = true;
                 
         } if ((msg.content.toLowerCase() === "->amanhã") || (msg.content.toLowerCase() === "->amanha"))  {
-            if(commands[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))) {
+            if(commands[1].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let schedule = siga.getTomorrow();
                 msg.reply("as aulas de amanhã para o 4º período são: \n" + schedule + "\n");
     
@@ -124,7 +124,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->ava") {
-            if (commands[4].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+            if (commands[4].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 msg.reply("Link para o Ava: https://ava.qstione.com.br/");
                 db.updateMoney(msg.guild.id, msg.member.user.id, 1);
     
@@ -136,7 +136,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->prova") {
-            if (commands[3].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+            if (commands[3].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 let examination = siga.getExaminationInfo();
                 msg.reply(examination);
         
@@ -242,7 +242,7 @@ bot.on("message", msg => {
     
             commandUsed = true;
     
-        } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == config.gasporId && msg.guild.id === config.botTestesId) {
+        } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == config.gasporId && msg.guild.id === process.env.BOTTESTESID) {
             const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
             const message = "Comunicado oficial da ImaginaWallet! \n Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala";
             bot.channels.cache.get(config.log_channel).send(message, attachment);

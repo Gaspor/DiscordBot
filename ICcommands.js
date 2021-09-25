@@ -6,7 +6,7 @@ function icCommands(msg, commandUsed, bot) {
     commandUsed = false;
 
     if (msg.content.toLowerCase() === "->conta") {
-        if (commandsIC[0].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        if (commandsIC[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             db.selectUser(msg.member.user.id, msg, msg.guild.id);
 
         } else {
@@ -17,7 +17,7 @@ function icCommands(msg, commandUsed, bot) {
         commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->criar") {
-        if (commandsIC[1].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        if (commandsIC[1].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             db.verifyUser(msg.member.user.id, msg.member.user.tag, msg, msg.guild.id);
 
         } else {
@@ -28,7 +28,7 @@ function icCommands(msg, commandUsed, bot) {
         commandUsed = true;
 
     } if (msg.content.toLowerCase().startsWith("->transferir")) {
-        if (commandsIC[2].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        if (commandsIC[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             const command = msg.content.toLowerCase();
             const commandSplit = command.split(" ");
     
@@ -53,11 +53,11 @@ function icCommands(msg, commandUsed, bot) {
         commandUsed = true;
 
     } if (msg.content.toLowerCase() === "->ic") {
-        if (commands[17].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        if (commands[17].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             let message = "Os comandos do Imagina Wallet são: \n";
     
             commandsIC.forEach((value) => {
-                if (value.onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))) {
+                if (value.onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                     message += value.commandExample + " = " + value.description + "\n";
     
                 }
