@@ -1,16 +1,19 @@
+require('dotenv').config();
+
 async function connect() {
     const config = require("./config.json");
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
     if (global.connection)
         return global.connection.connect();
 
     const { Pool } = require('pg');
     const pool = new Pool({
-        connectionString: 'postgres://' + config.db_username + ':' + 
-        config.db_password + '@' + 
-        config.db_server + ':' + 
-        config.db_port + '/' + 
-        config.db_name
+        connectionString: 'postgres://' + process.env.DB_USERNAME + ':' + 
+        process.env.DB_PASSWORD + '@' + 
+        process.env.DB_SERVER + ':' + 
+        process.env.DB_PORT + '/' + 
+        process.env.DB_NAME + "?sslmode=require" 
     });
 
     //apenas testando a conexão
