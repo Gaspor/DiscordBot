@@ -1,19 +1,22 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const config = require("./config.json");
+/*const config = require("./config.json");
 const cron = require('cron');
-const db = require('./db');
 const siga = require('./siga');
 const ic = require('./ICcommands');
 const fun = require('./funnyCommands');
-const mg = require('./minigames');
+const mg = require('./minigames');*/
+const db = require('./db');
 const { commandsMinigames, commands, commandUnavailable } = require('./commands');
+
+require('dotenv').config();
+
 
 let dateAux;
 
-bot.login(config.token);
+bot.login(process.env.TOKEN);
 
-let scheduledMessage = new cron.CronJob('00 00 19 * * 1-3', () => {
+/*let scheduledMessage = new cron.CronJob('00 00 19 * * 1-3', () => {
     bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
     bot.channels.cache.get(config.facul_channel).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
 });
@@ -56,7 +59,7 @@ let attScheduleAula2 = new cron.CronJob('00 55 20 * * 1-3', () => {
     bot.user.setActivity("Manutenção agendada!");
     siga.setSchedule(td); 
 
-});
+});*/
 
 
 bot.on('guildCreate', guild => {
@@ -68,7 +71,7 @@ bot.on('guildCreate', guild => {
 bot.on("ready", async () => {
     dateAux = new Date().getDate();
     bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
-    siga.getSchedule(dateAux, bot);
+    /*siga.getSchedule(dateAux, bot);
     scheduledMessage.start();
     examinationMessage.start();
     in40minMessage.start();
@@ -76,8 +79,9 @@ bot.on("ready", async () => {
     attSchedule.start();
     attScheduleAula1.start();
     attScheduleAula2.start();
+    */
     console.log("Bot started in " + bot.guilds.cache.size + " servers!\n");
-    bot.channels.cache.get(config.log_channel).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
+    //bot.channels.cache.get(config.log_channel).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
 
 });
 
@@ -89,7 +93,7 @@ bot.on("message", msg => {
         msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor");
     
     } else {
-        if (msg.member.id == config.gasporId && msg.guild.id === config.JogoMinimalistaId) {
+        /*if (msg.member.id == config.gasporId && msg.guild.id === config.JogoMinimalistaId) {
             const member = msg.member;
             let testRole = bot.guilds.cache.get(config.JogoMinimalistaId).roles.cache.find(role => role.id == config.setinhaId);
             member.roles.add(testRole);
@@ -181,8 +185,8 @@ bot.on("message", msg => {
     
             commandUsed = true;
     
-        } if (msg.content.toLowerCase() === "->github") {
-            if (commands[6].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
+        }*/ if (msg.content.toLowerCase() === "->github") {
+            if (commands[6].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 msg.reply("Link para o github: https://github.com/Gaspor/DiscordBot");
                 db.updateMoney(msg.guild.id, msg.member.user.id, 1);
     
@@ -193,7 +197,7 @@ bot.on("message", msg => {
             
             commandUsed = true;
     
-        } if (msg.content.toLowerCase() === "->helpkrai") {
+        } /*if (msg.content.toLowerCase() === "->helpkrai") {
             if (commands[7].onlyIn.find(element => (element == msg.guild.id) || (element == config.all_servers))){
                 let message = "Os comandos são: \n";
         
@@ -247,15 +251,15 @@ bot.on("message", msg => {
     
         }
         
-        if (commandUsed) {
+        */if (commandUsed) {
             console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
-            bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
+            bot.channels.cache.get(process.env.LOG_CHANNEL).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
             
         }
-    
+    /*
         ic.icCommands(msg, commandUsed, bot);
         fun.funnyCommands(msg, commandUsed, bot);
-        mg.minigames(msg, commandUsed, bot);
+        mg.minigames(msg, commandUsed, bot);*/
 
     }
 });

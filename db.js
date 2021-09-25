@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 async function connect() {
-    const config = require("./config.json");
     process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
     if (global.connection)
