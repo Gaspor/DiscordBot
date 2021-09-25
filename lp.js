@@ -2,8 +2,9 @@ require('dotenv').config();
 const pupp = require('puppeteer');
 
 async function getLPRanking() {
+    
     let LPRanking = ["Ranking das linguagens de programação mais usadas de acordo com o github:"];
-    const browser = await pupp.launch();
+    const browser = await pupp.launch({headless: true,args: ['--no-sandbox','--disable-setuid-sandbox']});
     const page = await browser.newPage();
     page.goto(process.env.LPRANKING_URL);
     await page.waitForNavigation();

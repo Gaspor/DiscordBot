@@ -141,7 +141,7 @@ function getSchedule(dateAux, myBot) {
 }
 
 async function setSchedule(td) {
-    const browser = await pupp.launch();
+    const browser = await pupp.launch({headless: true,args: ['--no-sandbox','--disable-setuid-sandbox']});
     const page = await browser.newPage();
 
     try {

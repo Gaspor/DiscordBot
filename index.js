@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-/*const config = require("./config.json");
-const cron = require('cron');
+/*const cron = require('cron');
 const siga = require('./siga');
 const ic = require('./ICcommands');
 const fun = require('./funnyCommands');
@@ -17,22 +16,22 @@ let dateAux;
 bot.login(process.env.TOKEN);
 
 /*let scheduledMessage = new cron.CronJob('00 00 19 * * 1-3', () => {
-    bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
-    bot.channels.cache.get(config.facul_channel).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
+    bot.channels.cache.get(process.env.GENERAL_CHANNEL).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
+    bot.channels.cache.get(process.env.FACUL_CHANNEL).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
 });
 
 let examinationMessage = new cron.CronJob('00 00 19 28 5 *', () => {
-    bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar que está na hora da prova! \nBoa sorte seus chifrudos, vcs vão precisar! \nLink do Ava: https://ava.qstione.com.br/ \n\n (Ps: me ajuda, eu nem vi os estudos dirigidos!)");
+    bot.channels.cache.get(process.env.GENERAL_CHANNEL).send("Mensagem agendada para avisar que está na hora da prova! \nBoa sorte seus chifrudos, vcs vão precisar! \nLink do Ava: https://ava.qstione.com.br/ \n\n (Ps: me ajuda, eu nem vi os estudos dirigidos!)");
     
 });
 
 let in40minMessage = new cron.CronJob('00 00 22 28 5 *', () => {
-    bot.channels.cache.get(config.general_channel).send("Mensagem agendada! \n40 minutos pra acabar essa desgraça, tomar no cu, espero que vcs tenham acertado!");
+    bot.channels.cache.get(process.env.GENERAL_CHANNEL).send("Mensagem agendada! \n40 minutos pra acabar essa desgraça, tomar no cu, espero que vcs tenham acertado!");
     
 });
 
 let examinationEnd = new cron.CronJob('00 40 22 28 5 *', () => {
-    bot.channels.cache.get(config.general_channel).send("Mensagem agendada para avisar sobre o termino da prova! \nEntre no ava para ver o resultado da bomba \nLink do Ava: https://ava.qstione.com.br/");
+    bot.channels.cache.get(process.env.GENERAL_CHANNEL).send("Mensagem agendada para avisar sobre o termino da prova! \nEntre no ava para ver o resultado da bomba \nLink do Ava: https://ava.qstione.com.br/");
     
 });
 
