@@ -1,5 +1,15 @@
 require('dotenv').config();
 
+const chromeOptions = {
+    headless: true,
+    defaultViewport: null,
+    args: [
+        "--incognito",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote"
+    ],
+};
 const commandUnavailable = "Este comando não está disponível neste servidor!";
 
 const commands = [{
@@ -305,4 +315,4 @@ const commandsIC = [{
     description : "Transfere uma quantia em imaginacoin para a pessoa com esse Discord ID ou com esse id da conta"
 }]
 
-module.exports = {commands, commandsMinigames, commandsIC, commandUnavailable};
+module.exports = {commands, commandsMinigames, commandsIC, commandUnavailable, chromeOptions};

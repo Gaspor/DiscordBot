@@ -1,5 +1,6 @@
 const pupp = require('puppeteer');
 const config = require("./config.json");
+const pupUtils = require("./commands");
 let bot;
 
 let today = [];
@@ -141,7 +142,7 @@ function getSchedule(dateAux, myBot) {
 }
 
 async function setSchedule(td) {
-    const browser = await pupp.launch({headless: true,args: ['--no-sandbox','--disable-setuid-sandbox']});
+    const browser = await pupp.launch(pupUtils.chromeOptions);
     const page = await browser.newPage();
 
     try {
