@@ -5,7 +5,6 @@ const { commandsMinigames, commandUnavailable } = require("./commands");
 
 async function minigames(msg, commandUsed, bot) {
     commandUsed = false;
-    
     if (msg.content.toLowerCase() === "->yt") {
         if (commandsMinigames[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             const voiceChannel = msg.member.voice.channel;

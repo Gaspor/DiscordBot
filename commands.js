@@ -6,10 +6,11 @@ const chromeOptions = {
     args: [
         "--incognito",
         "--no-sandbox",
-        "--single-process",
-        "--no-zygote"
+        "--no-zygote",
+        "--disabled-setupid-sandbox"
     ],
 };
+
 const commandUnavailable = "Este comando não está disponível neste servidor!";
 
 const commands = [{

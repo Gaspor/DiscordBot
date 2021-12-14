@@ -1,19 +1,23 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-/*const cron = require('cron');
-const siga = require('./siga');
 const ic = require('./ICcommands');
+const cron = require('cron');
+//const siga = require('./siga');
 const fun = require('./funnyCommands');
-const mg = require('./minigames');*/
+const mg = require('./minigames');
 const db = require('./db');
 const { commandsMinigames, commands, commandUnavailable } = require('./commands');
+const config = require("./config.json");
 
 require('dotenv').config();
-
 
 let dateAux;
 
 bot.login(process.env.TOKEN);
+
+const startedBot = new cron.CronJob('* */30 * * * *', () => {
+    console.log("Sent on!");
+})
 
 /*let scheduledMessage = new cron.CronJob('00 00 19 * * 1-3', () => {
     bot.channels.cache.get(process.env.GENERAL_CHANNEL).send("Mensagem agendada para avisar que teremos as seguintes aulas hoje: \n " + siga.getToday());
@@ -70,6 +74,7 @@ bot.on('guildCreate', guild => {
 bot.on("ready", async () => {
     dateAux = new Date().getDate();
     bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
+    startedBot.start();
     /*siga.getSchedule(dateAux, bot);
     scheduledMessage.start();
     examinationMessage.start();
@@ -92,12 +97,12 @@ bot.on("message", msg => {
         msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor");
     
     } else {
-        /*if (msg.member.id == config.gasporId && msg.guild.id === process.env.JOGOMINIMALISTAID) {
+        if (msg.member.id == config.gasporId && msg.guild.id === process.env.JOGOMINIMALISTAID) {
             const member = msg.member;
             let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == config.setinhaId);
             member.roles.add(testRole);
     
-        } if (msg.content.toLowerCase() === "->hoje") {
+        }/* if (msg.content.toLowerCase() === "->hoje") {
             if (commands[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 let schedule = siga.getToday();
                 msg.reply("as aulas de hj para o 4º período são: \n" + schedule + "\n");
@@ -250,15 +255,15 @@ bot.on("message", msg => {
     
         }
         
-        */if (commandUsed) {
+        */ic.icCommands(msg, commandUsed, bot);
+        if (commandUsed) {
             console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
             bot.channels.cache.get(process.env.LOG_CHANNEL).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
             
         }
-    /*
-        ic.icCommands(msg, commandUsed, bot);
+    
         fun.funnyCommands(msg, commandUsed, bot);
-        mg.minigames(msg, commandUsed, bot);*/
+        mg.minigames(msg, commandUsed, bot);
 
     }
 });
