@@ -5,7 +5,7 @@
     "LPRanking_url": "https://pypl.github.io/PYPL.html",
     "prefix": "prefix",
     
-    "log_channel": "LOG_CHANNEL_ID",
+    "LOG_CHANNEL": "LOG_CHANNEL_ID",
     "general_channel": "GENERAL_CHANNEL_ID",
     "tests_channel": "TESTS_CHANNEL_ID",
     "botTestesId": "TEST_CHANNEL_ID",

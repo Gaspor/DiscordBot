@@ -84,7 +84,7 @@ bot.on("ready", async () => {
     attScheduleAula2.start();
     */
     console.log("Bot started in " + bot.guilds.cache.size + " servers!\n");
-    //bot.channels.cache.get(process.env.log_channel).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
+    bot.channels.cache.get(process.env.LOG_CHANNEL).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
 
 });
 
@@ -93,12 +93,12 @@ bot.on("message", msg => {
     if(msg.author.bot) { return; }
 
     if(!msg.member){
-        msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor");
+        msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor!");
     
     } else {
-        if (msg.member.id == process.env.gasporId && msg.guild.id === process.env.JOGOMINIMALISTAID) {
+        if (msg.member.id == process.env.GASPORID && msg.guild.id === process.env.JOGOMINIMALISTAID) {
             const member = msg.member;
-            let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == process.env.setinhaId);
+            let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == process.env.SETINHAID);
             member.roles.add(testRole);
     
         }/* if (msg.content.toLowerCase() === "->hoje") {
@@ -155,9 +155,10 @@ bot.on("message", msg => {
         }*/ if (msg.content.toLowerCase() === "->dolar") {
             if (commands[5].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 async function dolar(msg) {
+                    const botMsg = await msg.reply("Pegando o valor do dolar, por favor aguarde!");
                     const dolar = require('./dolar');
                     const dolarCurrent = await dolar.getDolar();
-                    msg.reply("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
+                    botMsg.edit("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
                 };
         
                 dolar(msg);
@@ -173,9 +174,10 @@ bot.on("message", msg => {
         } if (msg.content.toLowerCase() === "->lprank") {
             if (commands[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 async function lp(msg) {
+                    const botMsg = await msg.reply("Pegando o ranking de linguagens, por favor aguarde!");
                     const lp = require('./lp');
                     LPRanking = await lp.getLPRanking();
-                    msg.reply(LPRanking);
+                    botMsg.edit(LPRanking);
                 };
 
                 lp(msg);
@@ -248,7 +250,7 @@ bot.on("message", msg => {
         } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == process.env.gasporId && msg.guild.id === process.env.BOTTESTESID) {
             const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
             const message = "Comunicado oficial da ImaginaWallet! \n Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala";
-            bot.channels.cache.get(process.env.log_channel).send(message, attachment);
+            bot.channels.cache.get(process.env.LOG_CHANNEL).send(message, attachment);
             
             commandUsed = true;
     

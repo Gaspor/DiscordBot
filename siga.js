@@ -188,7 +188,7 @@ async function setSchedule(td) {
         }
         
         browser.close();
-        bot.channels.cache.get(process.env.log_channel).send('Erro ao entrar no siga, arruma essa porra seu corno!');
+        bot.channels.cache.get(process.env.LOG_CHANNEL).send('Erro ao entrar no siga, arruma essa porra seu corno!');
         bot.user.setActivity("Erro ao entrar no siga!");
         console.log("ERROR: SIGA ERROR \n");
 
