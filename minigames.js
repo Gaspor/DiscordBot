@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-const config = require("./config.json");
 const Discord = require("discord.js");
 const { commandsMinigames, commandUnavailable } = require("./commands");
 
@@ -24,11 +23,7 @@ async function minigames(msg, commandUsed, bot) {
                             validate: null
                         }),
                         headers: {
-<<<<<<< HEAD
                             "Authorization": `Bot ${process.env.TOKEN}`,
-=======
-                            "Authorization": `Bot ${config.token}`,
->>>>>>> parent of 29ce03a... add: cron job
                             "Content-Type": "application/json"
                         }
                     } 
@@ -65,11 +60,7 @@ async function minigames(msg, commandUsed, bot) {
                             validate: null
                         }),
                         headers: {
-<<<<<<< HEAD
                             "Authorization": `Bot ${process.env.TOKEN}`,
-=======
-                            "Authorization": `Bot ${config.token}`,
->>>>>>> parent of 29ce03a... add: cron job
                             "Content-Type": "application/json"
                         }
                     } 
@@ -105,11 +96,7 @@ async function minigames(msg, commandUsed, bot) {
                             validate: null
                         }),
                         headers: {
-<<<<<<< HEAD
                             "Authorization": `Bot ${process.env.TOKEN}`,
-=======
-                            "Authorization": `Bot ${config.token}`,
->>>>>>> parent of 29ce03a... add: cron job
                             "Content-Type": "application/json"
                         }
                     } 
@@ -145,11 +132,7 @@ async function minigames(msg, commandUsed, bot) {
                             validate: null
                         }),
                         headers: {
-<<<<<<< HEAD
                             "Authorization": `Bot ${process.env.TOKEN}`,
-=======
-                            "Authorization": `Bot ${config.token}`,
->>>>>>> parent of 29ce03a... add: cron job
                             "Content-Type": "application/json"
                         }
                     } 
@@ -185,11 +168,7 @@ async function minigames(msg, commandUsed, bot) {
                             validate: null
                         }),
                         headers: {
-<<<<<<< HEAD
                             "Authorization": `Bot ${process.env.TOKEN}`,
-=======
-                            "Authorization": `Bot ${config.token}`,
->>>>>>> parent of 29ce03a... add: cron job
                             "Content-Type": "application/json"
                         }
                     } 
@@ -209,11 +188,7 @@ async function minigames(msg, commandUsed, bot) {
 
     if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
-<<<<<<< HEAD
         bot.channels.cache.get(process.env.LOG_CHANNEL).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
-=======
-        bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
->>>>>>> parent of 29ce03a... add: cron job
 
     }
 }

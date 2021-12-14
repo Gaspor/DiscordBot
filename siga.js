@@ -1,5 +1,5 @@
 const pupp = require('puppeteer');
-const config = require("./config.json");
+const config = require("./process.env.json");
 const pupUtils = require("./commands");
 let bot;
 
@@ -46,7 +46,7 @@ function getSchedule(dateAux, myBot) {
     let dateNow = date.getDate();
     let inVacation;
 
-    if ((date.getMonth() + 1 >= config.vacation_month && date.getDate() >= config.vacation_day) || (date.getMonth() + 1 > config.vacation_month)) {
+    if ((date.getMonth() + 1 >= process.env.vacation_month && date.getDate() >= process.env.vacation_day) || (date.getMonth() + 1 > process.env.vacation_month)) {
         inVacation = false;
     
     } else {
@@ -146,14 +146,14 @@ async function setSchedule(td) {
     const page = await browser.newPage();
 
     try {
-        page.goto(config.siga_authUrl);
+        page.goto(process.env.siga_authUrl);
         await page.waitForNavigation();
-        await page.type('input[data-v-bee72fea]', config.username);
-        await page.type('input[data-v-2b5110c9]', config.password);
+        await page.type('input[data-v-bee72fea]', process.env.username);
+        await page.type('input[data-v-2b5110c9]', process.env.password);
         await page.click('button[data-v-0fade7b6]');
 
         await page.waitForNavigation();
-        page.goto(config.siga_userUrl);
+        page.goto(process.env.siga_userUrl);
         
         await page.waitForNavigation();
 
@@ -188,7 +188,7 @@ async function setSchedule(td) {
         }
         
         browser.close();
-        bot.channels.cache.get(config.log_channel).send('Erro ao entrar no siga, arruma essa porra seu corno!');
+        bot.channels.cache.get(process.env.log_channel).send('Erro ao entrar no siga, arruma essa porra seu corno!');
         bot.user.setActivity("Erro ao entrar no siga!");
         console.log("ERROR: SIGA ERROR \n");
 
@@ -265,11 +265,11 @@ function getExamination() {
     let date = new Date();
     let todayDate = date.getDate();
 
-    if (todayDate == config.examination_day) {
-        examination = "A prova é hj e começa " +  config.examination_hour + " fica esperto que vai ser presencial! \n";
+    if (todayDate == process.env.examination_day) {
+        examination = "A prova é hj e começa " +  process.env.examination_hour + " fica esperto que vai ser presencial! \n";
 
     } else {
-        examination = "A prova será no dia: " + config.examination_day + "/" + config.examination_month + "/" + config.examination_year;
+        examination = "A prova será no dia: " + process.env.examination_day + "/" + process.env.examination_month + "/" + process.env.examination_year;
 
     }
 
