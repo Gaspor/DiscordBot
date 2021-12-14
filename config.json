@@ -1,0 +1,38 @@
+{
+    "SIGA_AUTHURL": "https://siga.fagoc.br/app/#/auth/login",
+    "SIGA_USERURL": "https://siga.fagoc.br/app/#/principal/aluno/4",
+    "dolar_url": "https://www.google.com/search?client=opera-gx&q=dolar&sourceid=opera&ie=UTF-8&oe=UTF-8",
+    "LPRanking_url": "https://pypl.github.io/PYPL.html",
+    "PREFIX": "->",
+    
+    "facul_channel": "691777245173514292",
+    "facul_serverID": "691777244670066770",
+    "log_channel": "837039451220738078",
+    "newserver_channel": "883187768044429332",
+    "general_channel": "690573746179670079",
+    "TESTS_CHANNEL": "836611287268982817",
+    "botTestesId": "836611287268982814",
+    "JogoMinimalistaId": "690573745517232279",
+    "SETINHAID": "707747009184006235",
+    "GASPORID": "422204511377948673",
+    "all_servers": "ALL",
+    
+    "EXAMINATION_DAY": "17",
+    "EXAMINATION_MONTH": "9",
+    "EXAMINATION_YEAR": "2021",
+    "EXAMINATION_HOUR": "19:00",
+
+    "VACATION_DAY": "9",
+    "VACATION_MONTH": "8",
+
+    "token": "ODM2NjA2NjA2OTE3MTA3NzQy.YIgcng.h6jwEG5PWrCtJQnGrWTIjJhK8ig",
+    "username": "aln18372-2",
+    "password": "3x081KgcL692",
+
+    "db_username": "azosfcypqdclsi",
+    "db_password": "1ef84ade5c465c04c01ba707ec41ac771f170c26334470806d8e3ebb30a83108",
+    "db_port": "5432",
+    "db_name": "dcbcqma2j62mnj",
+    "db_server": "ec2-54-156-151-232.compute-1.amazonaws.com"
+
+}

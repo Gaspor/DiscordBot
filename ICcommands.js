@@ -1,6 +1,6 @@
 const db = require('./db');
-const config = require("./config.json");
 const { commandsIC, commandUnavailable, commands } = require('./commands');
+require('dotenv').config();
 
 function icCommands(msg, commandUsed, bot) {
     commandUsed = false;
@@ -78,7 +78,7 @@ function icCommands(msg, commandUsed, bot) {
     
     if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
-        bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
+        bot.channels.cache.get(process.LOG_CHANNEL).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
 
     }
 }

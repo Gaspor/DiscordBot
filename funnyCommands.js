@@ -1,7 +1,8 @@
 const db = require('./db');
 const Discord = require("discord.js");
-const config = require("./config.json");
 const { commands, commandUnavailable } = require('./commands');
+
+require('dotenv').config();
 
 function funnyCommands(msg, commandUsed, bot){
     commandUsed = false;
@@ -118,7 +119,7 @@ function funnyCommands(msg, commandUsed, bot){
     
     if (commandUsed) {
         console.log("O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name + " \n");
-        bot.channels.cache.get(config.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
+        bot.channels.cache.get(process.env.log_channel).send(msg.createdAt + ": O usuário " + msg.member.user.tag + " usou o comando " + msg.content.toLowerCase() + " no servidor " + msg.guild.name);
 
     }
 }
