@@ -7,6 +7,7 @@ const fun = require('./funnyCommands');
 const mg = require('./minigames');
 const db = require('./db');
 const { commandsMinigames, commands, commandUnavailable } = require('./commands');
+const config = require("./config.json");
 
 require('dotenv').config();
 
@@ -14,7 +15,7 @@ let dateAux;
 
 bot.login(process.env.TOKEN);
 
-const startedBot = new cron.CronJob('0 */30 * * * *', () => {
+const startedBot = new cron.CronJob('* */30 * * * *', () => {
     console.log("Sent on!");
 })
 
@@ -84,7 +85,7 @@ bot.on("ready", async () => {
     attScheduleAula2.start();
     */
     console.log("Bot started in " + bot.guilds.cache.size + " servers!\n");
-    bot.channels.cache.get(process.env.LOG_CHANNEL).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
+    //bot.channels.cache.get(config.log_channel).send('\n\n\n===================\n|    Bot started '  + bot.guilds.cache.size +  ' servers!    |\n===================');
 
 });
 
@@ -96,9 +97,9 @@ bot.on("message", msg => {
         msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor");
     
     } else {
-        if (msg.member.id == process.env.GASPORID && msg.guild.id === process.env.JOGOMINIMALISTAID) {
+        if (msg.member.id == config.gasporId && msg.guild.id === process.env.JOGOMINIMALISTAID) {
             const member = msg.member;
-            let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == process.env.SETINHAID);
+            let testRole = bot.guilds.cache.get(process.env.JOGOMINIMALISTAID).roles.cache.find(role => role.id == config.setinhaId);
             member.roles.add(testRole);
     
         }/* if (msg.content.toLowerCase() === "->hoje") {
@@ -245,10 +246,10 @@ bot.on("message", msg => {
     
             commandUsed = true;
     
-        } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == process.env.GASPORID && msg.guild.id === process.env.BOTTESTESID) {
+        } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == config.gasporId && msg.guild.id === process.env.BOTTESTESID) {
             const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
             const message = "Comunicado oficial da ImaginaWallet! \n Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala";
-            bot.channels.cache.get(process.env.log_channel).send(message, attachment);
+            bot.channels.cache.get(config.log_channel).send(message, attachment);
             
             commandUsed = true;
     

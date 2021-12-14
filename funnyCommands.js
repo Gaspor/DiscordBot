@@ -1,8 +1,7 @@
 const db = require('./db');
 const Discord = require("discord.js");
+const config = require("./config.json");
 const { commands, commandUnavailable } = require('./commands');
-
-require('dotenv').config();
 
 function funnyCommands(msg, commandUsed, bot){
     commandUsed = false;
