@@ -14,7 +14,7 @@ let dateAux;
 
 bot.login(process.env.TOKEN);
 
-const startedBot = new cron.CronJob('* */30 * * * *', () => {
+const startedBot = new cron.CronJob('0 */30 * * * *', () => {
     console.log("Sent on!");
 })
 
