@@ -17,7 +17,7 @@ async function minigames(msg, commandUsed, bot) {
                         body: JSON.stringify({
                             max_age: 21600,
                             max_users: 0,
-                            target_application_id: "755600276941176913", //Youtube ID
+                            target_application_id: "880218394199220334", //Youtube ID
                             target_type: 2,
                             temporary: false,
                             validate: null
