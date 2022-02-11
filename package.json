@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx eslint index.js && node index.js",
+    "start": "node index.js",
+    "dev": "npx eslint index.js && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
