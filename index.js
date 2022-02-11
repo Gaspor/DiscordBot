@@ -10,8 +10,6 @@ const { commandsMinigames, commands, commandUnavailable } = require('./commands'
 
 require('dotenv').config();
 
-let dateAux;
-
 bot.login(process.env.TOKEN);
 
 const startedBot = new cron.CronJob('0 */30 * * * *', () => {
@@ -71,7 +69,7 @@ bot.on('guildCreate', guild => {
 });
 
 bot.on("ready", async () => {
-    dateAux = new Date().getDate();
+    //let dateAux = new Date().getDate();
     bot.user.setActivity("a vida fora!\n ->helpkrai para ver os comandos!"); 
     startedBot.start();
     /*siga.getSchedule(dateAux, bot);
@@ -89,7 +87,7 @@ bot.on("ready", async () => {
 });
 
 bot.on("message", msg => {
-    commandUsed = false;
+    let commandUsed = false;
     if(msg.author.bot) { return; }
 
     if(!msg.member){
@@ -154,13 +152,6 @@ bot.on("message", msg => {
     
         }*/ if (msg.content.toLowerCase() === "->dolar") {
             if (commands[5].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-                async function dolar(msg) {
-                    const botMsg = await msg.reply("Pegando o valor do dolar, por favor aguarde!");
-                    const dolar = require('./dolar');
-                    const dolarCurrent = await dolar.getDolar();
-                    botMsg.edit("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
-                };
-        
                 dolar(msg);
                 db.updateMoney(msg.guild.id, msg.member.user.id, 1);
     
@@ -173,13 +164,6 @@ bot.on("message", msg => {
     
         } if (msg.content.toLowerCase() === "->lprank") {
             if (commands[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-                async function lp(msg) {
-                    const botMsg = await msg.reply("Pegando o ranking de linguagens, por favor aguarde!");
-                    const lp = require('./lp');
-                    LPRanking = await lp.getLPRanking();
-                    botMsg.edit(LPRanking);
-                };
-
                 lp(msg);
                 db.updateMoney(msg.guild.id, msg.member.user.id, 1); 
     
@@ -268,3 +252,17 @@ bot.on("message", msg => {
 
     }
 });
+
+async function dolar(msg) {
+    const botMsg = await msg.reply("Pegando o valor do dolar, por favor aguarde!");
+    const dolar = require('./dolar');
+    const dolarCurrent = await dolar.getDolar();
+    botMsg.edit("O dolar está: R$" + dolarCurrent + "\nPatrocinio: Maxsuelzinho dos teclado");
+}
+
+async function lp(msg) {
+    const botMsg = await msg.reply("Pegando o ranking de linguagens, por favor aguarde!");
+    const lp = require('./lp');
+    const LPRanking = await lp.getLPRanking();
+    botMsg.edit(LPRanking);
+}
