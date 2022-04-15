@@ -1,5 +1,4 @@
 const pupp = require('puppeteer');
-const config = require("./process.env.json");
 const pupUtils = require("./commands");
 let bot;
 
@@ -7,6 +6,7 @@ let today = [];
 let tomorrow = [];
 let examination = "";
 let firstOfDay = true;
+let maintenance = true;
 
 function formatSchedule(Array) {
     let schedule = "";
@@ -75,45 +75,20 @@ function getSchedule(dateAux, myBot) {
         //Sunday
         if (td === 0) {
             today = ["Hoje é domingo maluko, não enche! Volta amanhã, sua praga" + " \n"];
-            async function getInfo(){
-                await setSchedule(td);
-                tomorrow = formatSchedule(tomorrow);
-
-            }
-
-            getInfo();
+            getInfoOnlyTomorrow(td);
     
         //Monday and Tuesday
         } else if (td === 1 || td === 2) {
-            async function getInfo(){
-                await setSchedule(td);
-                today = formatSchedule(today);
-                tomorrow = formatSchedule(tomorrow);
-
-            }
-            getInfo();
+            getInfo(td);
     
         //Wednesday
         } else if (td === 3) {
-            async function getInfo(){
-                await setSchedule(td);
-                today = formatSchedule(today);
-                //tomorrow = formatSchedule(tomorrow);
-
-            }
-            getInfo();
+            getInfoOnlyToday(td);
 
             tomorrow = ["Amanhã é quinta, a gente tem aula não bixo" + " \n"];
     
         //Thursday
         } else if (td === 4) {
-            async function getInfo(){
-                await setSchedule(td);
-                today = formatSchedule(today);
-            
-            }
-            getInfo();
-
             today = ["Hoje é quinta a gente não tem nenhuma aula, pqp que felicidade!" + " \n"];
             tomorrow = ["Amanhã é sexta, obvio q a gente não tem aula porra!" + " \n"];
             maintenance = false;
@@ -197,14 +172,14 @@ async function setSchedule(td) {
 
 async function getLinks(rightArrowClicks, populateArray, page) {
     let teacherName = [], hours = [], links = [], hoursAux = [];
-    meetingsPerDay = 1;
+    let meetingsPerDay = 1;
     
-    for (i = 0; i < meetingsPerDay; i++) {
+    for (let i = 0; i < meetingsPerDay; i++) {
         await page.reload();
         await page.waitForTimeout(2000);
         const elements = await page.$x('/html/body/div/div[2]/div[3]/main/div[2]/div/div/div/div/div/div[2]/div/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/button[2]');
     
-        for (j = 0; j < rightArrowClicks; j++) {
+        for (let j = 0; j < rightArrowClicks; j++) {
             await elements[0].click();
             await page.waitForTimeout(2000);
 
@@ -225,7 +200,7 @@ async function getLinks(rightArrowClicks, populateArray, page) {
         
         const hour = await page.waitForSelector("body > div > div.layout.layout-default.production > div.layout-page-container.transition-generic > main > div.transition-wrapper > div > div > div > div > div > div.q-tabs-panes > div > div.row > div.col-sm-12.col-md-7.group > div:nth-child(2) > div.q-card-main.q-card-container.card-content > div > div > div:nth-child(" + (i + 1) + ") > div.q-item-main.q-item-section > div.q-item-sublabel");
         hoursAux[i] = await (await hour.getProperty('textContent')).jsonValue();
-        auxString = await hoursAux[i].split(" ");
+        const auxString = await hoursAux[i].split(" ");
         hoursAux[i] = await auxString[1].replace(".", "");
         console.log(hoursAux[i]);
         
@@ -253,7 +228,7 @@ async function getLinks(rightArrowClicks, populateArray, page) {
         }
     }
 
-    for (i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++) {
         populateArray[0 + (3*i)] = teacherName[i];
         populateArray[1 + (3*i)] = hours[i];
         populateArray[2 + (3*i)] = links[i] + " \n";
@@ -288,6 +263,26 @@ function getToday(){
 function getTomorrow(){
     return tomorrow;
 }
-    
+
+async function getInfoOnlyTomorrow(td){
+    await setSchedule(td);
+    tomorrow = formatSchedule(tomorrow);
+
+}
+
+async function getInfo(td){
+    await setSchedule(td);
+    today = formatSchedule(today);
+    tomorrow = formatSchedule(tomorrow);
+
+}
+
+async function getInfoOnlyToday(td){
+    await setSchedule(td);
+    today = formatSchedule(today);
+    //tomorrow = formatSchedule(tomorrow);
+
+}
+
 
 module.exports = {getSchedule, setSchedule, getExaminationInfo, getToday, getTomorrow};

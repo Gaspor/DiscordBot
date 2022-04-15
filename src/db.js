@@ -85,7 +85,7 @@ async function updateMoney(serverID, discordID, value) {
         let result = results != undefined ? results.rows.length : 0;
         console.log("Row count: %d", result);
         if (result > 0) {
-            newWalletValue = parseFloat(results.rows[0].wallet) + value;
+            const newWalletValue = parseFloat(results.rows[0].wallet) + value;
             console.log(newWalletValue);
             const sqlUpdate = `UPDATE users SET wallet=$1 WHERE serverid='${serverID}' AND discordid='${discordID}'`;
             const values = [newWalletValue];

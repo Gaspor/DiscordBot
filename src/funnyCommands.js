@@ -7,7 +7,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     if (msg.content.toLowerCase() === "->js") {
         if (commands[10].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const attachment = new Discord.MessageAttachment("assets/Js.jpg");
+            const attachment = new Discord.MessageAttachment("src/assets/Js.jpg");
             
             msg.reply("PAU NO CU DO JS", attachment);
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
@@ -33,7 +33,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->sexta") {
         if (commands[11].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const attachment = new Discord.MessageAttachment("assets/sexta.jpeg");
+            const attachment = new Discord.MessageAttachment("src/assets/sexta.jpeg");
             msg.reply("Com todo respeito, VAI TE FUDER SEXTA!!!", attachment);
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 
@@ -46,7 +46,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->ramom") {
         if (commands[13].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const attachment = new Discord.MessageAttachment("assets/ramom.jpg");
+            const attachment = new Discord.MessageAttachment("src/assets/ramom.jpg");
             msg.reply("Vai pra pqp menor!", attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
@@ -60,7 +60,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->lip") {
         if (commands[12].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const attachment = new Discord.MessageAttachment("assets/lipzera.png");
+            const attachment = new Discord.MessageAttachment("src/assets/lipzera.png");
             msg.reply("Da uma mamadinha em mim", attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
@@ -74,7 +74,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->max") {
         if (commands[14].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const attachment = new Discord.MessageAttachment("assets/hakiman.png");
+            const attachment = new Discord.MessageAttachment("src/assets/hakiman.png");
             msg.reply(attachment);
 
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
@@ -88,9 +88,9 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->natação?") {
         if (commands[15].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            answers = ["Meu pau na sua mão", "Te comi e tu achou bão", "Me da um mamadão"];
+            const answers = ["Meu pau na sua mão", "Te comi e tu achou bão", "Me da um mamadão"];
             
-            random = Math.floor(Math.random() * answers.length);    
+            const random = Math.floor(Math.random() * answers.length);    
             msg.reply(answers[random]);
             db.updateMoney(msg.guild.id, msg.member.user.id, 1);
 

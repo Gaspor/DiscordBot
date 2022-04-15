@@ -232,7 +232,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } /*if (msg.content.toLowerCase() === "->comunicado" && msg.member.id == process.env.gasporId && msg.guild.id === process.env.BOTTESTESID) {
-            const attachment = new Discord.MessageAttachment("assets/ImagineWallet.png");
+            const attachment = new Discord.MessageAttachment("src/assets/ImagineWallet.png");
             const message = "Comunicado oficial da ImaginaWallet! \n Atenção todos, a ImaginaWallet agora está com integrada a um banco de dados, \npor razão disso todas as contas foram reiniciadas, \npara criar a sua digite o comando ->criar. \n\nAgradecemos a atenção!\nAss: Equipe RogerinPokaBala";
             bot.channels.cache.get(process.env.LOG_CHANNEL).send(message, attachment);
             
