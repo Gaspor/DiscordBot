@@ -1,156 +1,132 @@
-require('dotenv').config();
+const { connect } = require("./config/connection");
 
-async function connect() {
-    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-
-    if (global.connection)
-        return global.connection.connect();
-
-    const { Pool } = require('pg');
-    const pool = new Pool({
-        connectionString: 'postgres://' + process.env.DB_USERNAME + ':' +
-            process.env.DB_PASSWORD + '@' +
-            process.env.DB_SERVER + ':' +
-            process.env.DB_PORT + '/' +
-            process.env.DB_NAME + "?sslmode=require"
-    });
-
-    //apenas testando a conexão
-    const client = await pool.connect();
-    console.log("Criou pool de conexões no PostgreSQL!");
-
-    const res = await client.query('SELECT NOW()');
-    console.log(res.rows[0]);
-    client.release();
-
-    //guardando para usar sempre o mesmo
-    global.connection = pool;
-    return pool.connect();
-}
-
-async function verifyUser(discordID, username, msg, serverID) {
+async function isRegister(discordID, serverID) {
     const client = await connect();
     const sql = `SELECT * FROM users WHERE discordid='${discordID}' AND serverid='${serverID}'`;
 
-    await client.query(sql, async function (err, results) {
-        let result = results != undefined ? results.rows.length : 0;
-        console.log("Row count: %d", result);
+    return new Promise(function (resolve, reject) {
+        client.query(sql)
+            .then(function (res) {
+                resolve(res);
+                return res.rows[0];
+            }).catch(function (e) {
+                reject(e.stack);
+            });
+    });
+}
 
-        if (result === 0) {
-            await insertUser(discordID, username, msg, serverID);
+async function getAccount(discordID, serverID, msg) {
+    return isRegister(discordID, serverID)
+        .then(function (result) {
+            if (result.rowCount > 0) {
+                msg.reply("Número da conta: " + result.rows[0].id + "\n " +
+                    "Usuário: " + result.rows[0].username + "\n " +
+                    "Saldo: " + result.rows[0].wallet);
 
-        } else {
-            msg.reply("Deu erro nessa porra, tu já tenha uma conta aqui carai!");
+            } else {
+                msg.reply("Você ainda não tem uma conta nessa porra de Server, para criar uma digite ->criar");
 
-        }
+            }
+        }).catch(function (err) {
+            console.log(err);
+
+        });
+}
+
+async function insertUser(discordID, serverID, username, msg) {
+    try {
+        const client = await connect();
+        const sql = 'INSERT INTO users(discordname, wallet, discordid, serverid) VALUES ($1, $2, $3, $4);';
+        const values = [username, 10.00, discordID, serverID];
+        await client.query(sql, values);
+        msg.reply("Usuário criado com sucesso!");
+
+    } catch (e) {
+        console.log(e);
+        msg.reply("Ocorreu um erro ao criar sua conta, tente novamente mais tarde!");
+
     }
-    );
 }
 
-async function insertUser(discordID, username, msg, serverID) {
-    const client = await connect();
-    console.log('Inserindo...');
-    const sql = 'INSERT INTO users(username, wallet, discordid, serverid) VALUES ($1, $2, $3, $4);';
-    const values = [username, 10.00, discordID, serverID];
-    await client.query(sql, values);
-    msg.reply("Usuário criado com sucesso!");
+async function createUser(discordID, serverID, username, msg) {
+    return isRegister(discordID, serverID)
+        .then(function (result) {
+            if (result.rowCount > 0) {
+                msg.reply("Tu já tem uma conta aqui, seu arrombado!");
 
+            } else {
+                insertUser(discordID, serverID, username, msg);
+
+            }
+        }).catch(function (err) {
+            console.log(err);
+
+        });
 }
 
-async function selectUser(discordID, msg, serverID) {
-    const client = await connect();
-    console.log("Buscando User...");
-    const sql = `SELECT * FROM users WHERE discordid='${discordID}' AND serverid='${serverID}'`;
-    await client.query(sql, async function (err, results) {
-        let result = results != undefined ? results.rows.length : 0;
-        console.log("Row count: %d", result);
+async function updateMoney(discordID, serverID, value) {
+    return isRegister(discordID, serverID)
+        .then(async function (result) {
+            if (result.rowCount > 0) {
+                const client = await connect();
+                const newWalletValue = parseFloat(result.rows[0].wallet) + value;
+                const sqlUpdate = `UPDATE users SET wallet=$1 WHERE serverid='${serverID}' AND discordid='${discordID}'`;
+                const values = [newWalletValue];
+                await client.query(sqlUpdate, values);
+                console.log("Dado atualizado com sucesso");
 
-        if (result > 0) {
-            msg.reply("Número da conta: " + results.rows[0].id + "\n " +
-                "Usuário: " + results.rows[0].username + "\n " +
-                "Saldo: " + results.rows[0].wallet);
+            } else {
+                console.log("Usuário não encontrado!");
 
-        } else {
-            msg.reply("Você ainda não tem uma conta nessa porra de Server, para criar uma digite ->criar");
+            }
+        }).catch(function (err) {
+            console.log(err);
 
-        }
-    });
+        });
 }
 
-async function updateMoney(serverID, discordID, value) {
-    const client = await connect();
-    console.log("Atualizando dados...");
-    const sql = `SELECT * FROM users WHERE discordid='${discordID}' AND serverid='${serverID}'`;
-    await client.query(sql, async function (err, results) {
-        let result = results != undefined ? results.rows.length : 0;
-        console.log("Row count: %d", result);
-        if (result > 0) {
-            const newWalletValue = parseFloat(results.rows[0].wallet) + value;
-            console.log(newWalletValue);
-            const sqlUpdate = `UPDATE users SET wallet=$1 WHERE serverid='${serverID}' AND discordid='${discordID}'`;
-            const values = [newWalletValue];
-            await client.query(sqlUpdate, values);
-            console.log("Dado atualizado com sucesso");
+async function transferMoney(discordID, receiverDiscordID, serverID, receiverAccountID, msg, value) {
+    if (receiverAccountID != 0) {
+        const client = await connect();
+        const sql = `SELECT * FROM users WHERE serverid='${serverID}' AND id='${receiverAccountID}'`;
+        await client.query(sql, async function (err, resultsReceiver) {
+            const result = resultsReceiver.rows.length;
 
-        }
-    });
+            if (result > 0) {
+                /* TODO */
+            }
+        });
+    }
+
+    return isRegister(discordID, serverID)
+        .then(async function (result) {
+            if (result.rowCount > 0) {
+                isRegister(receiverDiscordID, serverID)
+                    .then(async function (resultReceiver) {
+                        if (resultReceiver.rowCount > 0) {
+                            try {
+                                await updateMoney(receiverDiscordID, serverID, value);
+                                await updateMoney(discordID, serverID, -value);
+                                msg.reply("Transferência bem sucedida!");
+
+                            } catch {
+                                msg.reply("Erro ao fazer a transferência!");
+
+                            }
+                        }
+                    }).catch(function (err) {
+                        console.log(err);
+
+                    });
+
+            } else {
+                msg.reply("Erro na transferência! Pode ser q você não tenha uma conta");
+
+            }
+        }).catch(function (err) {
+            console.log(err);
+
+        });
 }
 
-async function transferMoney(msg, value, user, server, receiverDiscordID, receiverAccountID) {
-    const client = await connect();
-    let sql = `SELECT * FROM users WHERE serverid='${server}' AND discordid='${user}'`;
-    await client.query(sql, async function (err, results) {
-        let result = results != undefined ? results.rows.length : 0; console.log("Row count: %d", results.rows.length);
-        if (result > 0 && receiverDiscordID != 0) {
-            sql = `SELECT * FROM users WHERE serverid='${server}' AND discordid='${receiverDiscordID}'`;
-            await client.query(sql, async function (err, resultsReceiver) {
-                result = resultsReceiver.rows.length;
-                console.log("Row count: %d", resultsReceiver.rows.length);
-
-                if (result > 0) {
-                    try {
-                        await updateMoney(msg.guild.id, receiverDiscordID, value);
-                        await updateMoney(msg.guild.id, msg.member.user.id, -value);
-                        msg.reply("Transferência bem sucedida!");
-
-                    } catch {
-                        msg.reply("Erro ao fazer a transferência!");
-
-                    }
-                } else {
-                    msg.reply("Erro, não foi encontrado nenhum usuário com esse discordID!");
-
-                }
-            });
-
-        } else if (result > 0 && receiverAccountID != 0) {
-            sql = `SELECT * FROM users WHERE serverid='${server}' AND id='${receiverAccountID}'`;
-            await client.query(sql, async function (err, resultsReceiver) {
-                result = resultsReceiver.rows.length;
-                console.log("Row count: %d", resultsReceiver.rows.length);
-
-                if (result > 0) {
-                    try {
-                        let discordID = resultsReceiver.rows[0].discordid;
-                        await updateMoney(msg.guild.id, discordID, value);
-                        await updateMoney(msg.guild.id, msg.member.user.id, -value);
-                        msg.reply("Transferência bem sucedida!");
-
-                    } catch {
-                        msg.reply("Erro ao fazer a transferência!");
-
-                    }
-                } else {
-                    msg.reply("Erro, não foi encontrado nenhum usuário com esse ID de conta nesse servidor!");
-
-                }
-            });
-
-        } else {
-            msg.reply("Erro, não foi possível encontrar a sua conta nesse servidor!");
-
-        }
-    });
-}
-
-module.exports = { connect, verifyUser, selectUser, updateMoney, transferMoney };
+module.exports = { getAccount, createUser, updateMoney, transferMoney };

@@ -104,7 +104,7 @@ bot.on("message", msg => {
                 let schedule = siga.getToday();
                 msg.reply("as aulas de hj para o 4º período são: \n" + schedule + "\n");
     
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
             } else {
                 msg.reply(commandUnavailable);
     
@@ -116,7 +116,7 @@ bot.on("message", msg => {
                 let schedule = siga.getTomorrow();
                 msg.reply("as aulas de amanhã para o 4º período são: \n" + schedule + "\n");
     
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
             } else {
                 msg.reply(commandUnavailable);
                 
@@ -127,7 +127,7 @@ bot.on("message", msg => {
         } if (msg.content.toLowerCase() === "->ava") {
             if (commands[4].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 msg.reply("Link para o Ava: https://ava.qstione.com.br/");
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
             } else {
                 msg.reply(commandUnavailable);
@@ -141,7 +141,7 @@ bot.on("message", msg => {
                 let examination = siga.getExaminationInfo();
                 msg.reply(examination);
         
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
             } else {
                 msg.reply(commandUnavailable);
@@ -153,7 +153,7 @@ bot.on("message", msg => {
         }*/ if (msg.content.toLowerCase() === "->dolar") {
             if (commands[5].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 dolar(msg);
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
             } else {
                 msg.reply(commandUnavailable);
@@ -165,7 +165,7 @@ bot.on("message", msg => {
         } if (msg.content.toLowerCase() === "->lprank") {
             if (commands[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 lp(msg);
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1); 
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1); 
     
             } else {
                 msg.reply(commandUnavailable);
@@ -177,7 +177,7 @@ bot.on("message", msg => {
         } if (msg.content.toLowerCase() === "->github") {
             if (commands[6].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
                 msg.reply("Link para o github: https://github.com/Gaspor/DiscordBot");
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
             } else {
                 msg.reply(commandUnavailable);
@@ -200,7 +200,7 @@ bot.on("message", msg => {
                 message += "================= Created by Gaspor =================";
                 msg.reply(message);
         
-                db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+                db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
             } else {
                 msg.reply(commandUnavailable);
