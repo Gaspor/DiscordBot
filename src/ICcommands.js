@@ -6,7 +6,7 @@ function icCommands(msg, commandUsed, bot) {
 
     if (msg.content.toLowerCase() === "->conta") {
         if (commandsIC[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
-            db.selectUser(msg.member.user.id, msg, msg.guild.id);
+            db.getAccount(msg.member.user.id, msg.guild.id, msg);
 
         } else {
             msg.reply(commandUnavailable);
@@ -17,7 +17,7 @@ function icCommands(msg, commandUsed, bot) {
 
     } if (msg.content.toLowerCase() === "->criar") {
         if (commandsIC[1].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
-            db.verifyUser(msg.member.user.id, msg.member.user.tag, msg, msg.guild.id);
+            db.createUser(msg.member.user.id, msg.guild.id, msg.member.user.tag, msg);
 
         } else {
             msg.reply(commandUnavailable);
@@ -32,16 +32,16 @@ function icCommands(msg, commandUsed, bot) {
             const commandSplit = command.split(" ");
 
             const value = parseFloat(commandSplit[1].replace(",", "."));
-            const discordID = commandSplit[2];
+            const discordIDReceiver = commandSplit[2];
             const accountID = commandSplit[3];
 
-            console.log(value, discordID, accountID);
+            console.log(value, discordIDReceiver, accountID);
 
             if (value <= 0 || isNaN(value)) {
                 msg.reply("Valor inválido para transferência, tu tá querendo me bugar krai?");
 
             } else {
-                db.transferMoney(msg, value, msg.member.user.id, msg.guild.id, discordID, accountID);
+                db.transferMoney(msg.member.user.id, discordIDReceiver, msg.guild.id, accountID, msg, value);
 
             }
         } else {
@@ -65,7 +65,7 @@ function icCommands(msg, commandUsed, bot) {
             message += "Obs: Use os comandos que estão no ->helpkrai para ganhar I₵ 1.00";
             msg.reply(message);
 
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
         } else {
             msg.reply(commandUnavailable);
 

@@ -10,7 +10,7 @@ function funnyCommands(msg, commandUsed, bot){
             const attachment = new Discord.MessageAttachment("src/assets/Js.jpg");
             
             msg.reply("PAU NO CU DO JS", attachment);
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -22,7 +22,7 @@ function funnyCommands(msg, commandUsed, bot){
     } if (msg.content.toLowerCase() === "->secret") {
         if (commands[9].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             msg.reply("Tu acha mesmo que ia ter algum segredo? Tu é burrão mesmo bixo!");
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -35,7 +35,7 @@ function funnyCommands(msg, commandUsed, bot){
         if (commands[11].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             const attachment = new Discord.MessageAttachment("src/assets/sexta.jpeg");
             msg.reply("Com todo respeito, VAI TE FUDER SEXTA!!!", attachment);
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -49,7 +49,7 @@ function funnyCommands(msg, commandUsed, bot){
             const attachment = new Discord.MessageAttachment("src/assets/ramom.jpg");
             msg.reply("Vai pra pqp menor!", attachment);
 
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -63,7 +63,7 @@ function funnyCommands(msg, commandUsed, bot){
             const attachment = new Discord.MessageAttachment("src/assets/lipzera.png");
             msg.reply("Da uma mamadinha em mim", attachment);
 
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -77,7 +77,7 @@ function funnyCommands(msg, commandUsed, bot){
             const attachment = new Discord.MessageAttachment("src/assets/hakiman.png");
             msg.reply(attachment);
 
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -92,7 +92,7 @@ function funnyCommands(msg, commandUsed, bot){
             
             const random = Math.floor(Math.random() * answers.length);    
             msg.reply(answers[random]);
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
@@ -104,7 +104,7 @@ function funnyCommands(msg, commandUsed, bot){
     } if (msg.content.toLowerCase() === "->kmeans") {
         if (commands[16].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
             msg.reply("Sei de nada desse assunto não menor, não enche! (Só sei que essa porra de assunto é chatão)");
-            db.updateMoney(msg.guild.id, msg.member.user.id, 1);
+            db.updateMoney(msg.member.user.id, msg.guild.id, 1);
 
         } else {
             msg.reply(commandUnavailable);
