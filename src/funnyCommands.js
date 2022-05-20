@@ -88,7 +88,7 @@ function funnyCommands(msg, commandUsed, bot){
 
     } if (msg.content.toLowerCase() === "->natação?") {
         if (commands[15].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
-            const answers = ["Meu pau na sua mão", "Te comi e tu achou bão", "Me da um mamadão"];
+            const answers = ["Meu pau na sua mão", "Te comi e tu achou bão", "Me da um mamadão", "Te comi atrás do caminhão", "Te comi num avião"];
             
             const random = Math.floor(Math.random() * answers.length);    
             msg.reply(answers[random]);

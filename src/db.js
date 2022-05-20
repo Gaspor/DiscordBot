@@ -9,8 +9,10 @@ async function isRegister(discordID, serverID) {
             .then(function (res) {
                 resolve(res);
                 return res.rows[0];
+
             }).catch(function (e) {
                 reject(e.stack);
+
             });
     });
 }
@@ -68,13 +70,18 @@ async function updateMoney(discordID, serverID, value) {
     return isRegister(discordID, serverID)
         .then(async function (result) {
             if (result.rowCount > 0) {
-                const client = await connect();
-                const newWalletValue = parseFloat(result.rows[0].wallet) + value;
-                const sqlUpdate = `UPDATE users SET wallet=$1 WHERE serverid='${serverID}' AND discordid='${discordID}'`;
-                const values = [newWalletValue];
-                await client.query(sqlUpdate, values);
-                console.log("Dado atualizado com sucesso");
-
+                try {
+                    const client = await connect();
+                    const newWalletValue = parseFloat(result.rows[0].wallet) + value;
+                    const sqlUpdate = `UPDATE users SET wallet=$1 WHERE serverid='${serverID}' AND discordid='${discordID}'`;
+                    const values = [newWalletValue];
+                    await client.query(sqlUpdate, values);
+                    console.log("Dado atualizado com sucesso");
+                    
+                } catch (e) {
+                    console.log("Erro ao atualizar o dado do usuário");
+                    
+                }
             } else {
                 console.log("Usuário não encontrado!");
 
@@ -85,17 +92,34 @@ async function updateMoney(discordID, serverID, value) {
         });
 }
 
+async function transferMoneyById(serverID, receiverAccountID) {
+    const client = await connect();
+    const sql = `SELECT * FROM users WHERE serverid='${serverID}' AND id='${receiverAccountID}'`;
+
+    return new Promise(function (resolve, reject) {
+        client.query(sql)
+            .then(function (resultsReceiver) {
+                resolve(resultsReceiver.rows[0].discordid);
+                return resultsReceiver.rows[0].discordid;
+
+            }).catch(function (e) {
+                reject(e.stack);
+
+            });
+    });
+}
+
 async function transferMoney(discordID, receiverDiscordID, serverID, receiverAccountID, msg, value) {
     if (receiverAccountID != 0) {
-        const client = await connect();
-        const sql = `SELECT * FROM users WHERE serverid='${serverID}' AND id='${receiverAccountID}'`;
-        await client.query(sql, async function (err, resultsReceiver) {
-            const result = resultsReceiver.rows.length;
-
-            if (result > 0) {
-                /* TODO */
-            }
-        });
+        await transferMoneyById(serverID, receiverAccountID)
+            .then(function (result) {
+                if (result) {
+                    receiverDiscordID = result;
+                }
+            }).catch(function (err) {
+                console.log(err);
+        
+            });
     }
 
     return isRegister(discordID, serverID)
@@ -118,7 +142,6 @@ async function transferMoney(discordID, receiverDiscordID, serverID, receiverAcc
                         console.log(err);
 
                     });
-
             } else {
                 msg.reply("Erro na transferência! Pode ser q você não tenha uma conta");
 
@@ -126,7 +149,7 @@ async function transferMoney(discordID, receiverDiscordID, serverID, receiverAcc
         }).catch(function (err) {
             console.log(err);
 
-        });
+        });  
 }
 
 module.exports = { getAccount, createUser, updateMoney, transferMoney };
