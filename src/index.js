@@ -6,7 +6,7 @@ const cron = require('cron');
 const fun = require('./funnyCommands');
 const mg = require('./minigames');
 const db = require('./db');
-const { commandsMinigames, commands, commandUnavailable } = require('./commands');
+const { commandsMinigames, commands, commandUnavailable, commandsRpg } = require('./commands');
 
 require('dotenv').config();
 
@@ -88,9 +88,9 @@ bot.on("ready", async () => {
 
 bot.on("message", msg => {
     let commandUsed = false;
-    if(msg.author.bot) { return; }
+    if (msg.author.bot) { return; }
 
-    if(!msg.member){
+    if (!msg.member){
         msg.reply("Não aceito comandos por aqui, por favor use os comandos em um servidor!");
     
     } else {
@@ -100,7 +100,7 @@ bot.on("message", msg => {
             member.roles.add(testRole);
     
         }/* if (msg.content.toLowerCase() === "->hoje") {
-            if (commands[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let schedule = siga.getToday();
                 msg.reply("as aulas de hj para o 4º período são: \n" + schedule + "\n");
     
@@ -112,7 +112,7 @@ bot.on("message", msg => {
             commandUsed = true;
                 
         } if ((msg.content.toLowerCase() === "->amanhã") || (msg.content.toLowerCase() === "->amanha"))  {
-            if(commands[1].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
+            if (commands[1].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let schedule = siga.getTomorrow();
                 msg.reply("as aulas de amanhã para o 4º período são: \n" + schedule + "\n");
     
@@ -125,7 +125,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->ava") {
-            if (commands[4].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[4].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 msg.reply("Link para o Ava: https://ava.qstione.com.br/");
                 db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
@@ -137,7 +137,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->prova") {
-            if (commands[3].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[3].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let examination = siga.getExaminationInfo();
                 msg.reply(examination);
         
@@ -151,7 +151,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         }*/ if (msg.content.toLowerCase() === "->dolar") {
-            if (commands[5].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[5].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 dolar(msg);
                 db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
@@ -163,7 +163,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->lprank") {
-            if (commands[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[2].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 lp(msg);
                 db.updateMoney(msg.member.user.id, msg.guild.id, 1); 
     
@@ -175,7 +175,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->github") {
-            if (commands[6].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[6].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 msg.reply("Link para o github: https://github.com/Gaspor/DiscordBot");
                 db.updateMoney(msg.member.user.id, msg.guild.id, 1);
     
@@ -187,7 +187,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         }if (msg.content.toLowerCase() === "->helpkrai") {
-            if (commands[7].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[7].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let message = "Os comandos são: \n";
         
                 commands.forEach((value) => {
@@ -210,7 +210,7 @@ bot.on("message", msg => {
             commandUsed = true;
     
         } if (msg.content.toLowerCase() === "->minigames") {
-            if (commands[8].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))){
+            if (commands[8].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
                 let message = "Os minigames são: \n";
         
                 commandsMinigames.forEach((value) => {
@@ -228,6 +228,17 @@ bot.on("message", msg => {
     
             }
     
+    
+            commandUsed = true;
+    
+        } if (msg.content.toLowerCase() === "->rpg") {
+            if (commandsRpg[0].onlyIn.find(element => (element == msg.guild.id) || (element == process.env.ALL_SERVERS))) {
+                msg.reply("Loot adicionado com sucesso");            
+    
+            } else {
+                msg.reply(commandUnavailable);
+    
+            }
     
             commandUsed = true;
     

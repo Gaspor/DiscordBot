@@ -22,4 +22,4 @@ async function getLPRanking() {
 
 }
 
-module.exports = {getLPRanking};
+module.exports = { getLPRanking };

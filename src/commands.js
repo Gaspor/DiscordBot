@@ -317,4 +317,15 @@ const commandsIC = [{
     description : "Transfere uma quantia em imaginacoin para a pessoa com esse Discord ID ou com esse id da conta"
 }]
 
-module.exports = {commands, commandsMinigames, commandsIC, commandUnavailable, chromeOptions};
+const commandsRpg = [{ 
+    /* 0 */
+    commandExample : "->rpg [Nome da Campanha]",
+    onlyIn: [
+        process.env.JOGOMINIMALISTAID, 
+        process.env.BOTTESTESID
+    ],
+
+    description : "Adiciona os loots de determinada campanha"
+}]
+
+module.exports = {commands, commandsMinigames, commandsIC, commandUnavailable, chromeOptions, commandsRpg};

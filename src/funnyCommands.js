@@ -122,4 +122,4 @@ function funnyCommands(msg, commandUsed, bot){
     }
 }
 
-module.exports = {funnyCommands};
+module.exports = { funnyCommands };
